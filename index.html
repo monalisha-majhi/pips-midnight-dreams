@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pip's Magical Nursery - Dream Creature Engine &amp; Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Quicksand:wght@500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-dim": "#101224",
+        "on-surface": "#e0e0fa",
+        "primary-fixed-dim": "#ffb0c9",
+        "tertiary": "#edcf57",
+        "primary-fixed": "#ffd9e3",
+        "secondary": "#75d4e8",
+        "surface": "#101224",
+        "on-primary": "#5e1034",
+        "outline": "#a18b91",
+        "tertiary-container": "#cfb33e",
+        "surface-container-high": "#27293c",
+        "surface-bright": "#36384c",
+        "background": "#101224",
+        "surface-container-low": "#181a2d",
+        "secondary-container": "#008092",
+        "surface-container-lowest": "#0b0d1e",
+        "surface-container": "#1c1e31",
+        "primary": "#ffbfd2",
+        "secondary-fixed": "#a3eeff",
+        "on-background": "#e0e0fa",
+        "outline-variant": "#534247",
+        "on-primary-container": "#7a284a",
+        "on-surface-variant": "#d9c1c6",
+        "surface-variant": "#323347",
+        "primary-container": "#ff94b9"
+      },
+      fontFamily: {
+        headline: ["Quicksand", "sans-serif"],
+        body: ["Plus Jakarta Sans", "sans-serif"],
+        mono: ["Space Grotesk", "monospace"]
+      }
+    }
+  }
+};
+</script>
+<style>
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism elevation tokens (DESIGN.md) */
+:root {
+  --glass-lv1-bg: rgba(22, 25, 56, 0.65);
+  --glass-lv1-blur: 16px;
+  --glass-lv1-border: rgba(248, 250, 252, 0.08);
+  --glass-lv2-bg: rgba(36, 27, 72, 0.70);
+  --glass-lv2-blur: 24px;
+  --glass-lv2-border: rgba(255, 148, 185, 0.25);
+  --glow-pink: 0 8px 32px -4px rgba(255, 148, 185, 0.28);
+  --glow-cyan: 0 8px 32px -4px rgba(139, 233, 253, 0.24);
+}
+
+/* Smooth theme transition */
+html, body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Scroll reveal animation */
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.1s, transform 0.1s;
+}
+.reveal-on-scroll.revealed {
+  animation: fadeUpIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Mobile spacing polish for sub-375px */
+@media (max-width: 374px) {
+  .hero-grid-stack {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Light / Daydream Nursery theme overrides */
+html:not(.dark) {
+  --day-bg: #faf6f0;
+  --day-surface: #fffdf9;
+  --day-container: #f5ede4;
+  --day-container-high: #eddcd0;
+  --day-text: #3e2723;
+  --day-text-muted: #7d655f;
+  --day-primary: #d46387;
+  --day-primary-container: #ffb8cf;
+  --day-on-primary-cont: #541128;
+  --day-secondary: #27889c;
+  --day-tertiary: #a67c13;
+}
+
+html:not(.dark) body {
+  background-color: var(--day-bg) !important;
+  color: var(--day-text) !important;
+}
+
+html:not(.dark) header {
+  background-color: rgba(255, 253, 249, 0.88) !important;
+  box-shadow: 0 4px 30px rgba(180, 140, 130, 0.15) !important;
+}
+
+html:not(.dark) .bg-surface-container\/70,
+html:not(.dark) .bg-surface-container\/60 {
+  background-color: rgba(245, 237, 228, 0.8) !important;
+  border-color: rgba(220, 195, 185, 0.5) !important;
+}
+
+html:not(.dark) .bg-surface-container-low\/70,
+html:not(.dark) .bg-surface-container-low\/90,
+html:not(.dark) .bg-surface-container-low {
+  background-color: #eeded3 !important;
+}
+
+html:not(.dark) .bg-surface-container-high\/80,
+html:not(.dark) .bg-surface-container-high {
+  background-color: #e5d1c2 !important;
+  color: #3e2723 !important;
+}
+
+html:not(.dark) .bg-surface-container-lowest\/80,
+html:not(.dark) .bg-surface-container-lowest\/90,
+html:not(.dark) .bg-surface-container-lowest {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) .text-on-surface {
+  color: #3e2723 !important;
+}
+
+html:not(.dark) .text-on-surface-variant {
+  color: #7d655f !important;
+}
+
+html:not(.dark) .bg-primary\/10 {
+  background-color: rgba(212, 99, 135, 0.15) !important;
+}
+
+html:not(.dark) .bg-secondary\/10 {
+  background-color: rgba(39, 136, 156, 0.15) !important;
+}
+
+html:not(.dark) .bg-tertiary\/10 {
+  background-color: rgba(166, 124, 19, 0.15) !important;
+}
+
+html:not(.dark) #pip-image-container {
+  background-color: transparent !important;
+}
+
+@keyframes pipGiggle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.08) rotate(-4deg); }
+  50% { transform: scale(1.12) rotate(4deg); }
+  75% { transform: scale(1.07) rotate(-2deg); }
+}
+.pip-giggle-anim { animation: pipGiggle 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important; }
+@keyframes gentleBreathe {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.02); }
+}
+.sleeping-breathe { animation: gentleBreathe 4s ease-in-out infinite; }
+@keyframes floatZzz {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  30% { opacity: 0.9; }
+  80% { transform: translate(14px, -30px) scale(1.1); opacity: 0.7; }
+  100% { transform: translate(24px, -48px) scale(1.3); opacity: 0; }
+}
+.zzz-particle { position: absolute; pointer-events: none; animation: floatZzz 3.2s ease-out infinite; font-family: 'Quicksand', sans-serif; font-weight: 700; color: #edcf57; }
+@keyframes wakeBurst {
+  0% { transform: scale(0.95); filter: brightness(1); }
+  40% { transform: scale(1.16) rotate(-3deg); filter: brightness(1.5) drop-shadow(0 0 35px #ffe16d); }
+  75% { transform: scale(1.08) rotate(3deg); filter: brightness(1.2); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+.pip-wake-anim { animation: wakeBurst 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important; }
+@keyframes floatUpFade {
+  0% { transform: translate(-50%, 0) scale(0.6); opacity: 0; }
+  25% { transform: translate(-50%, -15px) scale(1.1); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx, 0px)), -90px) scale(0.85); opacity: 0; }
+}
+.giggle-particle { position: absolute; pointer-events: none; z-index: 50; animation: floatUpFade 1.2s ease-out forwards; }
+.story-chapter-card.active-chapter { border-color: rgba(255, 191, 210, 0.7); box-shadow: 0 0 35px rgba(255, 148, 185, 0.25); transform: translateY(-4px); }
+.perspective-stage { perspective: 1200px; }
+
+/* 3D Card Tilt & Specular Starlight Glare */
+.dream-card-3d {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  will-change: transform;
+}
+.dream-card-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.08), transparent 75%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+.dream-card-3d:hover::after {
+  opacity: 1;
+}
+
+/* Micro-interactions & spring bounce for buttons & cards */
+@keyframes popBounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.93); }
+  65% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.pop-bounce {
+  animation: popBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Floating & Twinkle animations */
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1.5deg); }
+}
+@keyframes gentleFloatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(-2deg); }
+}
+@keyframes retroTwinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15) rotate(10deg); filter: drop-shadow(0 0 8px rgba(255,225,109,0.9)); }
+}
+.animate-float {
+  animation: gentleFloat 4.5s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: gentleFloatSlow 6.5s ease-in-out infinite;
+}
+.animate-retro-twinkle {
+  animation: retroTwinkle 3s ease-in-out infinite;
+}
+
+/* Interactive elements satisfying feedback */
+button:not(:disabled), a[href] {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+button:not(:disabled):hover, a[href]:hover {
+  transform: translateY(-2px);
+}
+button:not(:disabled):active, a[href]:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+/* Keyboard focus visibility */
+:focus-visible {
+  outline: 2px solid #ff94b9 !important;
+  outline-offset: 3px !important;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-colors duration-300">
+<div class="h-20 max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="relative flex items-center justify-center w-10 h-10 rounded-full bg-surface-container-high/60 shadow-[0_0_16px_rgba(255,148,185,0.35)]">
+<span class="material-symbols-outlined text-primary text-[22px]">bedtime</span>
+<span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+<a class="flex flex-col" href="#">
+<span class="font-headline text-primary tracking-tight font-semibold flex items-center gap-1.5 text-base sm:text-lg">haX.baby <span class="text-outline-variant font-light">/</span> <span class="text-secondary">Pip's Nursery</span></span>
+<span class="font-mono text-on-surface-variant uppercase tracking-widest text-[10px]">magical dream creature</span>
+</a>
+</div>
+<nav class="hidden md:flex items-center gap-1 bg-surface-container-lowest/60 p-1.5 rounded-full">
+<a class="px-4 py-1.5 rounded-full bg-surface-container-high text-primary font-semibold text-sm shadow-[0_0_12px_rgba(255,191,210,0.2)]" href="#">About Pip</a>
+<a class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high text-sm transition-all" href="#projects">Dream Projects</a>
+<a class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high text-sm transition-all" href="#story">Story</a>
+<a class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high text-sm transition-all" href="#blocks-game">Star Blocks</a>
+<a class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high text-sm transition-all" href="#lullaby-lab">Lullaby Lab</a>
+<a class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high text-sm transition-all" href="#chat-section">Whisper Chat</a>
+</nav>
+<div class="flex items-center gap-2">
+<!-- Mobile Hamburger Menu Toggle -->
+<button aria-label="Open mobile menu" class="md:hidden w-9 h-9 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-on-surface transition-all" id="btn-mobile-menu" type="button">
+<span class="material-symbols-outlined text-[22px]" id="mobile-menu-icon">menu</span>
+</button>
+<!-- Day / Night Mood Toggle -->
+<button aria-label="Toggle Day / Night Mode" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-tertiary transition-all shadow-[0_0_16px_rgba(237,207,87,0.25)]" id="btn-theme-toggle" title="Toggle Daydream / Midnight Nursery" type="button">
+<span class="material-symbols-outlined text-[19px]" id="theme-toggle-icon">light_mode</span>
+</button>
+<!-- Audio Mute / Unmute Button -->
+<button aria-label="Toggle Mute Sound" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-secondary transition-all shadow-[0_0_16px_rgba(117,212,232,0.25)]" id="btn-audio-mute" title="Global Audio: Unmuted (Click to Mute)" type="button">
+<span class="material-symbols-outlined text-[19px]" id="mute-icon">volume_up</span>
+</button>
+<a class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-secondary transition-all shadow-[0_0_16px_rgba(117,212,232,0.25)]" href="#chat-section" title="Whisper to Pip">
+<span class="material-symbols-outlined text-[19px]">forum</span>
+</a>
+<button class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-tertiary transition-all shadow-[0_0_16px_rgba(237,207,87,0.25)]" id="btn-star-burst" title="Burst Retro Stars" type="button">
+<span class="material-symbols-outlined text-[19px]">auto_awesome</span>
+</button>
+<button class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-primary transition-all shadow-[0_0_16px_rgba(255,148,185,0.28)]" id="btn-audio-giggle" title="Pip's Creature Giggle" type="button">
+<span class="material-symbols-outlined text-[19px]">sentiment_very_satisfied</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Mobile Navigation Overlay -->
+<div class="fixed inset-0 z-[45] bg-surface-container-lowest/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" id="mobile-menu-backdrop"></div>
+<nav class="fixed top-[5.5rem] left-4 right-4 z-[46] p-5 rounded-2xl bg-surface-container/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] flex flex-col gap-2 opacity-0 pointer-events-none translate-y-[-16px] transition-all duration-300 md:hidden" id="mobile-menu-panel">
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline text-sm text-primary font-semibold">Navigation</span>
+<button aria-label="Close mobile menu" class="w-8 h-8 rounded-full bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-on-surface transition-all" id="btn-mobile-menu-close" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<a class="mobile-nav-link px-4 py-2.5 rounded-xl bg-surface-container-high text-primary font-semibold text-sm" href="#">About Pip</a>
+<a class="mobile-nav-link px-4 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface text-sm transition-all" href="#projects">Dream Projects</a>
+<a class="mobile-nav-link px-4 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface text-sm transition-all" href="#story">Story</a>
+<a class="mobile-nav-link px-4 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface text-sm transition-all" href="#blocks-game">Star Blocks</a>
+<a class="mobile-nav-link px-4 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface text-sm transition-all" href="#lullaby-lab">Lullaby Lab</a>
+<a class="mobile-nav-link px-4 py-2.5 rounded-xl hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface text-sm transition-all" href="#chat-section">Whisper Chat</a>
+</nav>
+<main class="w-full pt-20">
+<!-- Ambient Nebulas, Parallax Celestial Layer & Canvas -->
+<div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" id="parallax-bg-stage">
+<div class="absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px] animate-pulse parallax-layer" data-depth="0.02" id="ambient-glow-1"></div>
+<div class="absolute top-[35%] -right-20 w-[450px] h-[450px] rounded-full bg-secondary/10 blur-[130px] parallax-layer" data-depth="-0.03" id="ambient-glow-2"></div>
+<div class="absolute top-[70%] left-[-100px] w-[600px] h-[600px] rounded-full bg-tertiary/10 blur-[150px] parallax-layer" data-depth="0.025" id="ambient-glow-3"></div>
+<!-- Floating Retro Stars, Moon, Sparkles with Layered Parallax -->
+<div class="absolute top-28 left-[7%] text-tertiary text-2xl animate-float-slow opacity-60 parallax-layer select-none" data-depth="0.04" title="Celestial Star">✦</div>
+<div class="absolute top-44 right-[10%] text-primary text-xl animate-float opacity-70 parallax-layer select-none" data-depth="-0.05" title="Pink Dream Sparkle">✧</div>
+<div class="absolute top-[38%] left-[3%] text-secondary text-2xl animate-float-slow opacity-50 parallax-layer select-none" data-depth="0.03" title="Cyan Starlight">★</div>
+<div class="absolute top-[52%] right-[5%] text-tertiary text-3xl animate-float opacity-65 parallax-layer select-none" data-depth="-0.04" title="Golden Moonbeam">🌙</div>
+<div class="absolute top-[68%] left-[8%] text-primary text-lg animate-retro-twinkle opacity-60 parallax-layer select-none" data-depth="0.05" title="Dream Stardust">✦</div>
+<div class="absolute top-[85%] right-[12%] text-secondary text-2xl animate-float-slow opacity-60 parallax-layer select-none" data-depth="-0.035" title="Astral Nebula Star">✧</div>
+<div class="absolute top-[92%] left-[16%] text-tertiary text-sm animate-float opacity-50 parallax-layer select-none" data-depth="0.02" title="Tiny Planet">🪐</div>
+</div>
+<canvas class="pointer-events-none fixed inset-0 z-40 w-full h-full" id="star-trail-canvas"></canvas>
+<!-- ============================================================== -->
+<!-- HERO: 3D CARD TILT, ROTATING FRAME, HEAD & EYE TRACKING -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-16">
+<div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container/70 shadow-[0_0_20px_rgba(255,191,210,0.15)] backdrop-blur-md">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-mono text-xs uppercase tracking-wider text-on-surface" id="hero-status-pill">🌟 Magical Dream Creature • Midnight Nursery</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-1.5 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-mono text-xs text-secondary">Dreamwave: Deep REM (Delta 0.8Hz)</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+<!-- Left Column -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<div class="relative max-w-lg p-5 rounded-2xl bg-surface-container-high/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(255,148,185,0.2)]">
+<div class="flex items-start gap-3">
+<span class="text-2xl select-none">🍼</span>
+<p class="font-body text-sm sm:text-base text-on-surface leading-relaxed">
+<span class="font-semibold text-primary font-headline">“Hi! I'm Pip!</span> Welcome to my dream engine. Tilt and rotate me in 3D, drag on your phone, tickle me to hear me laugh, or play with my dream blocks!”
+          </p>
+</div>
+<div class="absolute -bottom-2 left-10 w-4 h-4 bg-surface-container-high/80 rotate-45"></div>
+</div>
+<h1 class="font-headline text-3xl sm:text-5xl text-on-surface tracking-tight font-bold leading-tight">
+        “I build the <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-container to-secondary">dreams</span> you fall asleep inside.”
+      </h1>
+<p class="font-body text-base text-on-surface-variant max-w-xl">
+        Crafting velvety soft lullabies, anti-monster nightlights, and warm astral meadows for the sleepy travelers of haX.baby. Every thread woven in gentle delta code by a magical midnight creature.
+      </p>
+<div class="flex flex-wrap items-center gap-3 pt-2">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-container text-on-primary-container font-headline font-semibold shadow-[0_8px_32px_rgba(255,148,185,0.45)] hover:scale-105 transition-all" href="#projects">
+<span>✨ Explore Dream Projects</span>
+<span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+</a>
+<button class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-surface-container-high hover:bg-primary/20 text-primary border border-primary/30 font-headline font-medium shadow-[0_0_20px_rgba(255,191,210,0.25)] hover:scale-105 active:scale-95 transition-all" id="btn-hero-tickle" type="button">
+<span class="material-symbols-outlined text-[20px] text-primary animate-bounce">sentiment_satisfied</span>
+<span>Tickle Pip (Giggle) 💕</span>
+</button>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-surface-container-high text-secondary font-headline font-medium hover:scale-105 transition-all" href="#blocks-game">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+<span>Star Blocks</span>
+</a>
+</div>
+<div class="grid grid-cols-3 gap-3 pt-2 max-w-lg">
+<div class="p-3 rounded-2xl bg-surface-container-low/90 flex flex-col">
+<span class="font-mono text-[11px] text-on-surface-variant uppercase">Dreams Brewed</span>
+<span class="font-mono font-bold text-primary text-base sm:text-lg mt-0.5">1,420,892</span>
+</div>
+<div class="p-3 rounded-2xl bg-surface-container-low/90 flex flex-col">
+<span class="font-mono text-[11px] text-on-surface-variant uppercase">Stardust Purity</span>
+<span class="font-mono font-bold text-secondary text-base sm:text-lg mt-0.5">99.8%</span>
+</div>
+<div class="p-3 rounded-2xl bg-surface-container-low/90 flex flex-col">
+<span class="font-mono text-[11px] text-on-surface-variant uppercase">Cozy Index</span>
+<span class="font-mono font-bold text-tertiary text-base sm:text-lg mt-0.5">100% ✨</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Frameless Floating 3D Pip Creature Stage with Head & Eye Tracking -->
+<div class="lg:col-span-5 flex justify-center items-center relative perspective-stage">
+<div class="absolute w-72 h-72 sm:w-[440px] sm:h-[440px] rounded-full bg-primary/20 blur-[85px] animate-pulse pointer-events-none"></div>
+<!-- Hint Badge -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 z-30 pointer-events-none animate-bounce">
+<span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary text-on-primary text-xs font-semibold shadow-[0_0_20px_rgba(255,148,185,0.7)] font-mono uppercase">
+<span class="material-symbols-outlined text-[15px]">3d_rotation</span>
+  Drag &amp; Tilt Pip in 3D!
+</span>
+</div>
+<!-- Frameless 3D Creature Stage (No Rectangular Card, No Box, No Borders) -->
+<div class="relative cursor-pointer w-full max-w-md select-none touch-manipulation transform-gpu will-change-transform flex flex-col items-center justify-center p-2" id="pip-3d-card" role="button" tabindex="0" title="Touch, drag or move cursor across the screen to see Pip's 3D head tilt &amp; hear Pip giggle!">
+<div class="relative flex items-center justify-center w-full" id="pip-image-container">
+<div class="absolute inset-0 pointer-events-none z-30" id="pip-giggle-fx"></div>
+<div class="w-full relative flex items-center justify-center will-change-transform" id="pip-character-wrapper" style="transform-origin: 50% 60%;">
+<!-- Pip Transparent 3D Floating Creature Artwork -->
+<img alt="Pip the Magical Creature Baby in cozy nightcap floating in 3D" class="w-full h-auto max-h-[500px] object-contain select-none pointer-events-none will-change-transform drop-shadow-[0_15px_35px_rgba(255,148,185,0.25)]" id="pip-main-img" onerror="this.onerror=null;this.src='main_pip.png'" src="pip_transparent.png"/>
+<!-- Seamless Matching Catchlights: Pip's Right Eye (~41.8% left, ~43.5% top) -->
+<div class="absolute pointer-events-none" style="left: 41.8%; top: 43.5%; width: 22px; height: 22px; transform: translate(-50%, -50%);">
+<div class="w-full h-full flex items-center justify-center transition-transform duration-75 ease-out" id="pupil-left">
+<!-- Soft, warm golden glowing pinprick catchlight resting naturally inside button eye -->
+<div class="w-2.5 h-2.5 rounded-full bg-[#fff4c7] shadow-[0_0_8px_#ffe16d,0_0_16px_rgba(237,207,87,0.7)]"></div>
+</div>
+</div>
+<!-- Seamless Matching Catchlights: Pip's Left Eye (~65.3% left, ~39.2% top) -->
+<div class="absolute pointer-events-none" style="left: 65.3%; top: 39.2%; width: 22px; height: 22px; transform: translate(-50%, -50%);">
+<div class="w-full h-full flex items-center justify-center transition-transform duration-75 ease-out" id="pupil-right">
+<!-- Soft, warm golden glowing pinprick catchlight resting naturally inside button eye -->
+<div class="w-2.5 h-2.5 rounded-full bg-[#fff4c7] shadow-[0_0_8px_#ffe16d,0_0_16px_rgba(237,207,87,0.7)]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-1 pointer-events-none px-4 py-1.5 rounded-full bg-surface-container/60 backdrop-blur-md border border-primary/30 flex items-center gap-1.5 whitespace-nowrap shadow-[0_0_20px_rgba(255,148,185,0.2)]">
+<span class="text-sm">💖</span>
+<span class="font-headline text-xs text-primary font-semibold">Touch or drag Pip to interact!</span>
+</div>
+<div class="mt-3 flex items-center justify-between text-on-surface-variant px-1 flex-wrap gap-2 text-xs font-mono w-full max-w-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-[18px]">bedtime</span>
+<span class="text-on-surface">3D Physics &amp; Head Tracking</span>
+</div>
+<span class="text-secondary bg-surface-bright/50 px-2.5 py-1 rounded-full flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+Lantern Lit • Tickle Me 💕
+</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- SECTION 1: DREAM PROJECTS -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 reveal-on-scroll" id="projects">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="material-symbols-outlined text-primary text-[20px]">science</span>
+<span class="font-mono text-xs text-primary uppercase tracking-widest">Pip's Engineering Bench</span>
+</div>
+<h2 class="font-headline text-2xl sm:text-4xl text-on-surface font-bold">Dream Projects &amp; Astral Inventions</h2>
+</div>
+<p class="font-body text-sm text-on-surface-variant max-w-md">
+      Hover over the dream capsules to illuminate their internal starlight circuits. Built with soft midnight precision.
+    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="p-6 rounded-3xl bg-surface-container/60 backdrop-blur-2xl shadow-xl flex flex-col justify-between border border-white/5 hover:border-primary/40 transition-all hover:-translate-y-1">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-11 h-11 rounded-2xl bg-surface-container-high flex items-center justify-center text-primary shadow-[0_0_16px_rgba(255,148,185,0.3)]">
+<span class="material-symbols-outlined">graphic_eq</span>
+</div>
+<span class="font-mono text-xs text-tertiary bg-surface-container-lowest px-2.5 py-1 rounded-full">v2.4 Nocturne</span>
+</div>
+<h3 class="font-headline text-xl text-on-surface font-semibold mb-2">Lullaby Synthesizer v2</h3>
+<p class="font-body text-sm text-on-surface-variant mb-4 leading-relaxed">
+          Algorithmic celestial sound engine that weaves delta waves with soft music-box chimes for restless star-wanderers.
+        </p>
+<div class="flex flex-wrap gap-1.5 mb-4 text-xs font-mono">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-secondary">Harmonic Oscillation</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary">Web Audio</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2">
+<button class="project-tone-btn flex-1 py-2 rounded-full bg-surface-container-high hover:bg-primary-container text-xs font-headline font-semibold transition-all text-center" data-freq="432" type="button">Inspect 432Hz Sound</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-6 rounded-3xl bg-surface-container/60 backdrop-blur-2xl shadow-xl flex flex-col justify-between border border-white/5 hover:border-secondary/40 transition-all hover:-translate-y-1">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-11 h-11 rounded-2xl bg-surface-container-high flex items-center justify-center text-secondary shadow-[0_0_16px_rgba(117,212,232,0.3)]">
+<span class="material-symbols-outlined">flare</span>
+</div>
+<span class="font-mono text-xs text-primary bg-surface-container-lowest px-2.5 py-1 rounded-full">v1.9 Lucent</span>
+</div>
+<h3 class="font-headline text-xl text-on-surface font-semibold mb-2">Nightlight Engine</h3>
+<p class="font-body text-sm text-on-surface-variant mb-4 leading-relaxed">
+          Adaptive spectral luminance controller that keeps bedroom monsters at bay without waking slumbering baby spirits.
+        </p>
+<div class="flex flex-wrap gap-1.5 mb-4 text-xs font-mono">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-secondary">Warm Photons</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary">Anti-Shadow</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2">
+<button class="project-tone-btn flex-1 py-2 rounded-full bg-surface-container-high hover:bg-secondary text-xs font-headline font-semibold transition-all text-center hover:text-on-secondary" data-freq="528" type="button">Inspect 1800K Glow</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-6 rounded-3xl bg-surface-container/60 backdrop-blur-2xl shadow-xl flex flex-col justify-between border border-white/5 hover:border-tertiary/40 transition-all hover:-translate-y-1">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-11 h-11 rounded-2xl bg-surface-container-high flex items-center justify-center text-tertiary shadow-[0_0_16px_rgba(237,207,87,0.3)]">
+<span class="material-symbols-outlined">explore</span>
+</div>
+<span class="font-mono text-xs text-secondary bg-surface-container-lowest px-2.5 py-1 rounded-full">v3.1 Celestial</span>
+</div>
+<h3 class="font-headline text-xl text-on-surface font-semibold mb-2">Constellation Dream Map</h3>
+<p class="font-body text-sm text-on-surface-variant mb-4 leading-relaxed">
+          Interactive astral navigational grid mapping forgotten slumber realms, pillow clouds, and midnight star meadows.
+        </p>
+<div class="flex flex-wrap gap-1.5 mb-4 text-xs font-mono">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-tertiary">Spatial Grid</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary">Star Dust</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2">
+<button class="project-tone-btn flex-1 py-2 rounded-full bg-surface-container-high hover:bg-tertiary text-xs font-headline font-semibold transition-all text-center hover:text-on-tertiary" data-freq="639" type="button">Inspect Star Chart</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- SECTION 2: SCROLL-DRIVEN BEDTIME STORYBOOK -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 reveal-on-scroll" id="story">
+<div class="text-center max-w-2xl mx-auto mb-6">
+<span class="font-mono text-xs text-tertiary uppercase tracking-widest bg-surface-container/60 px-4 py-1.5 rounded-full inline-block mb-3 border border-tertiary/20">
+      📖 The Midnight Chronicles
+    </span>
+<h2 class="font-headline text-2xl sm:text-4xl text-on-surface font-bold">How Pip Became a Dream Architect</h2>
+<p class="font-body text-sm text-on-surface-variant mt-2">
+      A scroll-driven bedtime storybook. As you scroll, starlight illuminates each milestone in Pip's gentle journey.
+    </p>
+</div>
+<!-- Progress Bar -->
+<div class="max-w-md mx-auto mb-8 px-4">
+<div class="flex items-center justify-between text-xs font-mono text-on-surface-variant mb-2">
+<span>Storybook Progress</span>
+<span class="text-primary font-semibold" id="story-progress-text">Chapter 1 of 3</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-lowest overflow-hidden border border-white/5">
+<div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary w-1/3 rounded-full transition-all duration-500 ease-out" id="story-progress-bar"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Chapter 1 -->
+<div class="story-chapter-card active-chapter p-6 rounded-3xl bg-surface-container-low/70 backdrop-blur-xl shadow-lg flex flex-col justify-between border border-transparent transition-all duration-500" data-chapter="1">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs text-primary bg-primary/10 px-3 py-1 rounded-full uppercase">Chapter I</span>
+<span class="material-symbols-outlined text-primary text-[26px]">nightlight</span>
+</div>
+<h3 class="font-headline text-lg text-on-surface font-semibold mb-2">Born Under The Midnight Star</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+          “Found tucked snugly inside a cradle woven from pure moonbeams at haX.baby nursery, Pip learned to softly hum harmonic chords long before saying his first word.”
+        </p>
+</div>
+<div class="pt-4 flex items-center justify-between border-t border-white/5 mt-4">
+<span class="font-mono text-xs text-on-surface-variant">01 • Moonbeam Cradle</span>
+<button class="story-chime-btn w-8 h-8 rounded-full bg-surface-container-high hover:bg-primary/20 text-primary flex items-center justify-center transition-all" data-freq="523.25" title="Listen to chime" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Chapter 2 -->
+<div class="story-chapter-card p-6 rounded-3xl bg-surface-container-low/70 backdrop-blur-xl shadow-lg flex flex-col justify-between border border-transparent transition-all duration-500" data-chapter="2">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs text-secondary bg-secondary/10 px-3 py-1 rounded-full uppercase">Chapter II</span>
+<span class="material-symbols-outlined text-secondary text-[26px]">alarm_on</span>
+</div>
+<h3 class="font-headline text-lg text-on-surface font-semibold mb-2">The First Dream Machine</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+          “With bits of polished clockwork brass, discarded lullaby notes, and sparkling stardust, Pip crafted a small music engine to warm lonely hearts wandering between restless dreams.”
+        </p>
+</div>
+<div class="pt-4 flex items-center justify-between border-t border-white/5 mt-4">
+<span class="font-mono text-xs text-on-surface-variant">02 • Slumber Forge</span>
+<button class="story-chime-btn w-8 h-8 rounded-full bg-surface-container-high hover:bg-secondary/20 text-secondary flex items-center justify-center transition-all" data-freq="659.25" title="Listen to chime" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Chapter 3 -->
+<div class="story-chapter-card p-6 rounded-3xl bg-surface-container-low/70 backdrop-blur-xl shadow-lg flex flex-col justify-between border border-transparent transition-all duration-500" data-chapter="3">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs text-tertiary bg-tertiary/10 px-3 py-1 rounded-full uppercase">Chapter III</span>
+<span class="material-symbols-outlined text-tertiary text-[26px]">shield_moon</span>
+</div>
+<h3 class="font-headline text-lg text-on-surface font-semibold mb-2">Junior Engineer Induction</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+          “Inducted into the Midnight Nursery guild, Pip now architected entire cloud sectors where spooky shadows are gently repurposed into soft, pillowy floating sheep.”
+        </p>
+</div>
+<div class="pt-4 flex items-center justify-between border-t border-white/5 mt-4">
+<span class="font-mono text-xs text-on-surface-variant">03 • Dream Guardian</span>
+<button class="story-chime-btn w-8 h-8 rounded-full bg-surface-container-high hover:bg-tertiary/20 text-tertiary flex items-center justify-center transition-all" data-freq="880.00" title="Listen to chime" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- SECTION 3: STACK THE STAR BLOCKS MINI-GAME -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 reveal-on-scroll" id="blocks-game">
+<div class="p-6 sm:p-10 rounded-3xl bg-surface-container/70 backdrop-blur-2xl shadow-2xl border border-tertiary/30">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Game Info -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[22px]">auto_awesome</span>
+<span class="font-mono text-xs text-tertiary uppercase tracking-widest">Pip's Star Block Workshop</span>
+</div>
+<h2 class="font-headline text-2xl sm:text-3xl text-on-surface font-bold">Stack The Dream Blocks!</h2>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+          Help Pip build a cozy bedtime tower! Tap <strong>Drop Block</strong> when the swinging block lines up with the tower. Perfectly stacked blocks chime sweetly with bonus cozy points!
+        </p>
+<!-- Scoreboard -->
+<div class="grid grid-cols-3 gap-2.5">
+<div class="p-3 rounded-2xl bg-surface-container-low/90 flex flex-col border border-white/5">
+<span class="font-mono text-[10px] text-on-surface-variant uppercase">Height</span>
+<span class="font-mono text-2xl font-bold text-primary mt-0.5" id="game-score">0</span>
+</div>
+<div class="p-3 rounded-2xl bg-surface-container-low/90 flex flex-col border border-white/5">
+<span class="font-mono text-[10px] text-on-surface-variant uppercase">Combo</span>
+<span class="font-mono text-2xl font-bold text-tertiary mt-0.5" id="game-combo">0x</span>
+</div>
+<div class="p-3 rounded-2xl bg-surface-container-low/90 flex flex-col border border-white/5">
+<span class="font-mono text-[10px] text-on-surface-variant uppercase">Best</span>
+<span class="font-mono text-2xl font-bold text-secondary mt-0.5" id="game-best">0</span>
+</div>
+</div>
+<div class="p-2.5 rounded-2xl bg-surface-container-lowest/80 text-xs font-headline text-center text-primary-fixed border border-primary/20 min-h-[40px] flex items-center justify-center" id="game-message">
+          Tap "Drop Block" to start stacking!
+        </div>
+<div class="flex items-center gap-3 pt-1">
+<button class="flex-1 py-3 px-6 rounded-full bg-primary-container hover:bg-primary text-on-primary-container font-headline font-bold shadow-[0_6px_24px_rgba(255,148,185,0.4)] hover:scale-102 active:scale-95 transition-all text-center flex items-center justify-center gap-2" id="btn-drop-block" type="button">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+<span>Drop Block!</span>
+</button>
+<button class="py-3 px-4 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline text-sm font-semibold transition-all shadow-sm" id="btn-reset-game" title="Reset Tower" type="button">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+</button>
+</div>
+</div>
+<!-- Game Canvas -->
+<div class="lg:col-span-7 flex flex-col items-center justify-center">
+<div class="relative w-full max-w-md h-[360px] rounded-3xl bg-surface-container-lowest/90 border border-primary/20 shadow-inner overflow-hidden select-none flex flex-col justify-end p-3">
+<div class="absolute top-4 left-6 text-tertiary/60 text-lg pointer-events-none">⭐</div>
+<div class="absolute top-8 right-10 text-primary/40 text-base pointer-events-none">✨</div>
+<canvas class="w-full h-full object-contain cursor-pointer" height="360" id="stack-game-canvas" width="400"></canvas>
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 pointer-events-none text-[11px] font-mono text-on-surface-variant/80 bg-surface-dim/70 px-3 py-0.5 rounded-full">
+            Click anywhere on canvas to drop
+          </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- SECTION 4: SLEEPING PIP (BESIDE DREAM WISH WALL) WITH WAKING LULLABY -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 reveal-on-scroll" id="sleeping-pip-section">
+<div class="p-6 sm:p-8 rounded-3xl bg-surface-container/70 backdrop-blur-2xl shadow-2xl border border-primary/20 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+<div class="absolute -left-10 -top-10 w-52 h-52 bg-secondary/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-6 flex-col sm:flex-row text-center sm:text-left">
+<!-- Sleeping Pip Visual with poke Easter Egg -->
+<div class="relative group cursor-pointer" id="sleeping-pip-avatar" role="button" tabindex="0" title="Shh... Gently poke sleeping Pip 3 times to wake him!">
+<div class="absolute top-0 right-2 z-20 pointer-events-none">
+<span class="zzz-particle" style="animation-delay: 0s; font-size: 15px;">z</span>
+<span class="zzz-particle" style="animation-delay: 1.1s; font-size: 18px;">z</span>
+<span class="zzz-particle" style="animation-delay: 2.2s; font-size: 22px;">Z</span>
+</div>
+<div class="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl overflow-hidden bg-surface-container-lowest/80 border-2 border-primary/30 p-2.5 shadow-[0_0_30px_rgba(117,212,232,0.25)] flex items-center justify-center relative sleeping-breathe" id="sleeping-pip-wrapper">
+<img alt="Pip sleeping peacefully on a dream cloud" class="w-full h-full object-contain rounded-2xl select-none pointer-events-none transition-transform duration-300" id="sleeping-pip-img" onerror="this.onerror=null;this.src='pip_sleeping.png'" src="pip_sleeping.png"/>
+<div class="absolute bottom-1 right-2 px-2 py-0.5 rounded-full bg-surface-dim/90 border border-tertiary/40 text-[10px] font-mono text-tertiary">
+            Poke: <span id="poke-counter-val">0</span>/3
+          </div>
+</div>
+</div>
+<div class="flex flex-col gap-2 max-w-lg">
+<div class="flex items-center gap-2 justify-center sm:justify-start">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-mono text-xs text-tertiary uppercase tracking-wider">Dreaming Cloud Nursery</span>
+</div>
+<h3 class="font-headline text-xl sm:text-2xl text-on-surface font-bold">Shh... Pip is dreaming up tomorrow's stars</h3>
+<p class="font-body text-sm text-on-surface-variant">
+          Sleeping softly in his cozy cream star nightcap with a sweet pink bow atop a warm fluffy dream cloud. 
+          <span class="text-primary font-medium">Whisper a wish below, or gently poke Pip 3 times to discover his secret celestial lullaby!</span>
+</p>
+<div class="flex items-center gap-3 pt-1 justify-center sm:justify-start">
+<button class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-surface-container-high hover:bg-primary/20 text-primary border border-primary/30 text-xs font-semibold shadow-sm hover:scale-105 active:scale-95 transition-all" id="btn-poke-pip" type="button">
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+<span>Gently Poke Pip</span>
+</button>
+<span class="text-xs font-mono text-on-surface-variant">Hidden Easter Egg Discovery ✦</span>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-2xl bg-surface-container-low/90 border border-white/5 flex flex-col gap-1 items-center md:items-end text-center md:text-right shrink-0">
+<span class="font-mono text-xs text-secondary uppercase tracking-wider">Slumber Depth</span>
+<span class="font-mono text-xl font-bold text-tertiary">98.4% REM</span>
+<span class="text-[11px] text-on-surface-variant">Soft snoring in 432 Hz</span>
+</div>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- SECTION 5: LULLABY LAB & DREAM WISH WALL -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 reveal-on-scroll" id="lullaby-lab">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Synthesizer Pad -->
+<div class="lg:col-span-6 flex flex-col gap-5 p-6 sm:p-8 rounded-3xl bg-surface-container/70 backdrop-blur-2xl shadow-xl border border-white/5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary shadow-[0_0_16px_rgba(255,148,185,0.3)]">
+<span class="material-symbols-outlined">piano</span>
+</div>
+<div>
+<h3 class="font-headline text-lg sm:text-xl text-on-surface font-semibold">The Lullaby Lab</h3>
+<p class="font-body text-xs text-on-surface-variant">Pentatonic Dream Bells (Click keys to play tones)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-lowest text-xs font-mono text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span id="synth-status-label">Audio Ready</span>
+</div>
+</div>
+<!-- 6 Key Chime Pad -->
+<div class="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5">
+<button class="synth-key flex flex-col items-center justify-between p-3.5 h-24 rounded-2xl bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container transition-all active:scale-95 shadow-md" data-freq="523.25" type="button">
+<span class="font-mono text-xs text-primary">C5</span>
+<span class="text-lg">🌙</span>
+<span class="font-mono text-[10px] opacity-75">523Hz</span>
+</button>
+<button class="synth-key flex flex-col items-center justify-between p-3.5 h-24 rounded-2xl bg-surface-container-high hover:bg-secondary hover:text-on-secondary transition-all active:scale-95 shadow-md" data-freq="587.33" type="button">
+<span class="font-mono text-xs text-secondary">D5</span>
+<span class="text-lg">⭐</span>
+<span class="font-mono text-[10px] opacity-75">587Hz</span>
+</button>
+<button class="synth-key flex flex-col items-center justify-between p-3.5 h-24 rounded-2xl bg-surface-container-high hover:bg-tertiary hover:text-on-tertiary transition-all active:scale-95 shadow-md" data-freq="659.25" type="button">
+<span class="font-mono text-xs text-tertiary">E5</span>
+<span class="text-lg">✨</span>
+<span class="font-mono text-[10px] opacity-75">659Hz</span>
+</button>
+<button class="synth-key flex flex-col items-center justify-between p-3.5 h-24 rounded-2xl bg-surface-container-high hover:bg-primary hover:text-on-primary transition-all active:scale-95 shadow-md" data-freq="783.99" type="button">
+<span class="font-mono text-xs text-primary">G5</span>
+<span class="text-lg">☁️</span>
+<span class="font-mono text-[10px] opacity-75">784Hz</span>
+</button>
+<button class="synth-key flex flex-col items-center justify-between p-3.5 h-24 rounded-2xl bg-surface-container-high hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-all active:scale-95 shadow-md" data-freq="880.00" type="button">
+<span class="font-mono text-xs text-secondary">A5</span>
+<span class="text-lg">💤</span>
+<span class="font-mono text-[10px] opacity-75">880Hz</span>
+</button>
+<button class="synth-key flex flex-col items-center justify-between p-3.5 h-24 rounded-2xl bg-surface-container-high hover:bg-tertiary-fixed hover:text-on-tertiary-fixed transition-all active:scale-95 shadow-md" data-freq="1046.50" type="button">
+<span class="font-mono text-xs text-tertiary">C6</span>
+<span class="text-lg">🔔</span>
+<span class="font-mono text-[10px] opacity-75">1046Hz</span>
+</button>
+</div>
+<!-- Odometer -->
+<div class="mt-1 p-3 rounded-2xl bg-surface-container-lowest/80 flex items-center justify-between flex-wrap gap-2 text-xs">
+<div class="flex items-center gap-1.5 font-mono text-on-surface-variant uppercase">
+<span class="material-symbols-outlined text-tertiary text-[18px]">counter_3</span>
+<span>Dreams Safely Delivered</span>
+</div>
+<div class="flex items-center gap-1 font-mono text-base tracking-widest bg-surface-dim px-2.5 py-0.5 rounded-xl text-primary font-bold shadow-inner">
+<span class="bg-surface-container-high px-1 rounded text-on-surface">0</span>
+<span class="bg-surface-container-high px-1 rounded text-on-surface">4</span>
+<span class="bg-surface-container-high px-1 rounded text-secondary">2</span>
+<span class="bg-surface-container-high px-1 rounded text-primary">8</span>
+<span class="bg-surface-container-high px-1 rounded text-tertiary">9</span>
+<span class="bg-surface-container-high px-1 rounded text-primary-container">1</span>
+<span class="bg-surface-container-high px-1 rounded text-secondary">5</span>
+</div>
+</div>
+</div>
+<!-- Dream Wish Wall (Guestbook) -->
+<div class="lg:col-span-6 flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-surface-container/70 backdrop-blur-2xl shadow-xl border border-white/5" id="wish-wall">
+<div>
+<div class="flex items-center justify-between mb-3">
+<div>
+<h3 class="font-headline text-lg sm:text-xl text-on-surface font-semibold">Dream Wish Wall</h3>
+<p class="font-body text-xs text-on-surface-variant">Whisper a wish to the celestial star grid</p>
+</div>
+<span class="font-mono text-xs px-3 py-1 rounded-full bg-surface-container-high text-tertiary" id="wish-counter-pill">3 Wishes</span>
+</div>
+<div class="flex flex-col gap-2.5 max-h-[220px] overflow-y-auto pr-1 mb-4" id="wishes-list">
+<div class="p-3 rounded-2xl bg-surface-container-low/90 text-xs flex flex-col gap-1">
+<div class="flex items-center justify-between font-headline font-semibold text-primary">
+<span>Aria from Orion Cloud</span>
+<span class="font-mono text-[10px] text-tertiary">⭐ Golden Starlight</span>
+</div>
+<p class="font-body text-on-surface">“May my baby brother sleep tonight without waking up crying from scary dreams!”</p>
+</div>
+<div class="p-3 rounded-2xl bg-surface-container-low/90 text-xs flex flex-col gap-1">
+<div class="flex items-center justify-between font-headline font-semibold text-secondary">
+<span>Milo &amp; Teddy</span>
+<span class="font-mono text-[10px] text-secondary">🌌 Cyan Nebula</span>
+</div>
+<p class="font-body text-on-surface">“Wishing for endless hot cocoa rivers and warm wool socks in dreamland.”</p>
+</div>
+</div>
+</div>
+<form class="flex flex-col gap-2 pt-2" id="wish-form">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<input class="px-3.5 py-2 rounded-full bg-surface-container-lowest/90 text-on-surface placeholder-on-surface-variant text-xs focus:ring-2 focus:ring-primary shadow-inner" id="wish-author-input" placeholder="Your Dreamer Name..." required="" type="text"/>
+<select class="px-3.5 py-2 rounded-full bg-surface-container-lowest/90 text-on-surface text-xs focus:ring-2 focus:ring-secondary shadow-inner" id="wish-aura-select">
+<option value="pink">🌸 Pink Aurora</option>
+<option value="cyan">🌌 Cyan Nebula</option>
+<option selected="" value="golden">⭐ Golden Starlight</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<input class="flex-1 px-3.5 py-2 rounded-full bg-surface-container-lowest/90 text-on-surface placeholder-on-surface-variant text-xs focus:ring-2 focus:ring-primary shadow-inner" id="wish-text-input" placeholder="Type your cozy bedtime wish..." required="" type="text"/>
+<button class="px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-headline text-xs font-semibold hover:scale-105 transition-all shadow-[0_0_16px_rgba(255,148,185,0.4)] whitespace-nowrap" type="submit">
+            Send Wish ✨
+          </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- SECTION 6: WHISPER TO PIP (DREAM CHAT BOT - CHARACTER CHATS BACK) -->
+<!-- ============================================================== -->
+<section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 reveal-on-scroll" id="chat-section">
+<div class="p-6 sm:p-8 rounded-3xl bg-surface-container/70 backdrop-blur-2xl shadow-2xl border border-secondary/30">
+<div class="flex items-center justify-between flex-wrap gap-4 mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/40 shadow-[0_0_16px_rgba(255,148,185,0.4)] bg-surface-container-highest flex items-center justify-center shrink-0">
+  <img alt="Pip avatar" class="w-full h-full object-cover object-top scale-125 select-none pointer-events-none" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_CNxlbTOQRcKB03OZo6ZkgQ14o3AsTv9YIzgmYik4KasWMAxuOjTT_saKA1jBw2yyumYpmtdnb6V4IuXTaD39Nowh6x286toTfpqsXM00Nem6MDGagtOIgKeQ4wtzTMn6pglLu5bacc-21_B-07KQ9ITgqihxrhNNaiBcv03g4pjsu6daIUanA87exc_j3GNvYSp9qbh9hVmVpC2hD8GZIAbVlo0dOqCs5VJ0TYjlGTpmBzpCLNcDswbDJCklaPWWw'" src="main_pip.png"/>
+</div>
+<div>
+<h3 class="font-headline text-lg sm:text-xl text-on-surface font-semibold flex items-center gap-2">
+            Whisper to Pip <span class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-secondary/20 text-secondary">Dream Chat</span>
+</h3>
+<p class="font-body text-xs text-on-surface-variant">Ask Pip bedtime questions or share your sleepy thoughts</p>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1 rounded-full text-xs font-mono text-primary">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span>Pip is awake &amp; listening ✨</span>
+</div>
+</div>
+<!-- Quick Prompts -->
+<div class="flex flex-wrap gap-1.5 mb-3">
+<button class="chat-prompt px-3 py-1 rounded-full bg-surface-container-high hover:bg-primary/20 text-xs text-on-surface hover:text-primary transition-all border border-white/5 active:scale-95" data-msg="What are you dreaming right now?" type="button">
+        🌙 What are you dreaming?
+      </button>
+<button class="chat-prompt px-3 py-1 rounded-full bg-surface-container-high hover:bg-secondary/20 text-xs text-on-surface hover:text-secondary transition-all border border-white/5 active:scale-95" data-msg="Can you chase away my monsters?" type="button">
+        🛡️ Can you chase away monsters?
+      </button>
+<button class="chat-prompt px-3 py-1 rounded-full bg-surface-container-high hover:bg-tertiary/20 text-xs text-on-surface hover:text-tertiary transition-all border border-white/5 active:scale-95" data-msg="Tell me a tiny bedtime story!" type="button">
+        📖 Tiny bedtime story
+      </button>
+<button class="chat-prompt px-3 py-1 rounded-full bg-surface-container-high hover:bg-primary-container/20 text-xs text-on-surface hover:text-primary-fixed transition-all border border-white/5 active:scale-95" data-msg="How do dreams smell?" type="button">
+        ☁️ How do dreams smell?
+      </button>
+</div>
+<!-- Chat Dialogue Box -->
+<div class="h-60 w-full rounded-2xl bg-surface-container-lowest/80 p-4 overflow-y-auto flex flex-col gap-2.5 shadow-inner border border-white/5 mb-3" id="chat-box">
+<div class="flex items-start gap-2.5 max-w-xl">
+<div class="w-7 h-7 rounded-full overflow-hidden border border-primary/30 shrink-0 mt-0.5 bg-primary/20 flex items-center justify-center">
+  <img alt="Pip" class="w-full h-full object-cover object-top scale-125 select-none pointer-events-none" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_CNxlbTOQRcKB03OZo6ZkgQ14o3AsTv9YIzgmYik4KasWMAxuOjTT_saKA1jBw2yyumYpmtdnb6V4IuXTaD39Nowh6x286toTfpqsXM00Nem6MDGagtOIgKeQ4wtzTMn6pglLu5bacc-21_B-07KQ9ITgqihxrhNNaiBcv03g4pjsu6daIUanA87exc_j3GNvYSp9qbh9hVmVpC2hD8GZIAbVlo0dOqCs5VJ0TYjlGTpmBzpCLNcDswbDJCklaPWWw'" src="main_pip.png"/>
+</div>
+<div class="p-3 rounded-2xl rounded-tl-sm bg-surface-container-high text-on-surface font-body text-xs sm:text-sm leading-relaxed shadow-sm">
+          “Hewwo sleepy wanderer! 💫 I'm Pip! Ask me about stars, bedtime recipes, or how I turn nightmares into fluffy cotton marshmallows!”
+        </div>
+</div>
+</div>
+<!-- Input Form -->
+<form class="flex items-center gap-2" id="chat-input-form">
+<input class="flex-1 px-4 py-2.5 rounded-full bg-surface-container-lowest/90 text-on-surface placeholder-on-surface-variant text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner border border-white/5" id="chat-text-input" placeholder="Whisper something to Pip..." required="" type="text"/>
+<button class="px-5 py-2.5 rounded-full bg-secondary text-on-secondary font-headline text-xs sm:text-sm font-semibold hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(117,212,232,0.4)] flex items-center gap-1" type="submit">
+<span>Send</span>
+<span class="material-symbols-outlined text-[15px]">send</span>
+</button>
+</form>
+</div>
+</section>
+<!-- Footer -->
+<footer class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="text-primary font-headline font-semibold">haX.baby</span>
+<span>•</span>
+<span>Pip's Nursery</span>
+<span>•</span>
+<span>Magical Dream Creature Portfolio</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:text-tertiary transition-colors flex items-center gap-1" id="footer-easter-egg" title="Touch Pip's Lucky Star" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary">star</span>
+<span>Lucky Star</span>
+</button>
+<span>•</span>
+<span>© 2026 haX.baby</span>
+</div>
+</footer>
+<!-- ============================================================== -->
+<!-- SECRET WAKING LULLABY MODAL (EASTER EGG) -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300" id="waking-secret-modal">
+<div class="max-w-md w-full p-6 sm:p-8 rounded-3xl bg-surface-container-high/95 backdrop-blur-2xl shadow-[0_20px_70px_rgba(255,191,210,0.4)] border border-tertiary/50 flex flex-col items-center text-center gap-4 transform scale-95 transition-transform duration-300" id="waking-modal-card">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed/20 border-2 border-tertiary flex items-center justify-center text-3xl shadow-[0_0_30px_#ffe16d] animate-bounce">
+      🌟
+    </div>
+<span class="font-mono text-xs text-tertiary uppercase tracking-widest px-3 py-1 rounded-full bg-surface-container-lowest">Secret Discovery Unlocked</span>
+<h3 class="font-headline text-2xl text-on-surface font-bold">Pip's Secret Star Lullaby!</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+      You gently woke Pip from his dream cloud! He rubbed his big warm eyes, shook his starry nightcap, and composed a celestial music-box lullaby just for you.
+    </p>
+<div class="p-3 rounded-2xl bg-surface-container-lowest/90 w-full flex items-center justify-between text-xs font-mono text-secondary">
+<span>Mode: Music Box Harp</span>
+<span class="text-tertiary font-bold animate-pulse">Playing Celestial Chords ♫</span>
+</div>
+<div class="flex items-center gap-3 w-full pt-2">
+<button class="flex-1 py-2.5 rounded-full bg-primary-container text-on-primary-container font-headline text-xs font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,148,185,0.4)]" id="btn-replay-secret-lullaby" type="button">
+        Replay Lullaby ♫
+      </button>
+<button class="px-4 py-2.5 rounded-full bg-surface-container text-on-surface font-headline text-xs hover:bg-surface-bright transition-all" id="btn-close-secret-modal" type="button">
+        Sweet Dreams
+      </button>
+</div>
+</div>
+</div>
+</main>
+<!-- ============================================================== -->
+<!-- SCRIPT: AUDIO SYNTHESIS, 3D ROTATE & HEAD TILT, DAY/NIGHT, MUTE -->
+<!-- ============================================================== -->
+<script>
+(function() {
+  // --- 0. GLOBAL AUDIO MUTE CONTROL ---
+  let isGlobalMuted = false;
+  const btnAudioMute = document.getElementById('btn-audio-mute');
+  const muteIcon = document.getElementById('mute-icon');
+  const synthStatusLabel = document.getElementById('synth-status-label');
+
+  function updateMuteUI() {
+    if (!muteIcon) return;
+    if (isGlobalMuted) {
+      muteIcon.textContent = 'volume_off';
+      btnAudioMute.classList.add('text-error', 'border', 'border-error/30');
+      btnAudioMute.classList.remove('text-secondary');
+      btnAudioMute.title = "Global Audio: Muted (Click to Unmute)";
+      if (synthStatusLabel) synthStatusLabel.textContent = 'Audio Muted';
+    } else {
+      muteIcon.textContent = 'volume_up';
+      btnAudioMute.classList.remove('text-error', 'border', 'border-error/30');
+      btnAudioMute.classList.add('text-secondary');
+      btnAudioMute.title = "Global Audio: Unmuted (Click to Mute)";
+      if (synthStatusLabel) synthStatusLabel.textContent = 'Audio Ready';
+    }
+  }
+
+  if (btnAudioMute) {
+    btnAudioMute.addEventListener('click', () => {
+      isGlobalMuted = !isGlobalMuted;
+      updateMuteUI();
+      if (!isGlobalMuted) {
+        playChime(784, 0.2, 'sine');
+      }
+    });
+  }
+
+  // --- 0.1 DAY / NIGHT THEME TOGGLE ---
+  const htmlEl = document.documentElement;
+  const btnThemeToggle = document.getElementById('btn-theme-toggle');
+  const themeToggleIcon = document.getElementById('theme-toggle-icon');
+  const heroStatusPill = document.getElementById('hero-status-pill');
+  const ambient1 = document.getElementById('ambient-glow-1');
+  const ambient2 = document.getElementById('ambient-glow-2');
+  const ambient3 = document.getElementById('ambient-glow-3');
+
+  function applyTheme(isDark) {
+    if (isDark) {
+      htmlEl.classList.add('dark');
+      if (themeToggleIcon) themeToggleIcon.textContent = 'light_mode';
+      if (btnThemeToggle) btnThemeToggle.title = "Switch to Daydream Nursery (Light Mode)";
+      if (heroStatusPill) heroStatusPill.textContent = "🌟 Magical Dream Creature • Midnight Nursery";
+      if (ambient1) ambient1.className = "absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px] animate-pulse";
+      if (ambient2) ambient2.className = "absolute top-[35%] -right-20 w-[450px] h-[450px] rounded-full bg-secondary/10 blur-[130px]";
+      if (ambient3) ambient3.className = "absolute top-[70%] left-[-100px] w-[600px] h-[600px] rounded-full bg-tertiary/10 blur-[150px]";
+    } else {
+      htmlEl.classList.remove('dark');
+      if (themeToggleIcon) themeToggleIcon.textContent = 'dark_mode';
+      if (btnThemeToggle) btnThemeToggle.title = "Switch to Midnight Nursery (Dark Mode)";
+      if (heroStatusPill) heroStatusPill.textContent = "☀️ Sunlit Meadow • Daydream Nursery";
+      if (ambient1) ambient1.className = "absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-amber-200/25 blur-[120px] animate-pulse";
+      if (ambient2) ambient2.className = "absolute top-[35%] -right-20 w-[450px] h-[450px] rounded-full bg-rose-200/25 blur-[130px]";
+      if (ambient3) ambient3.className = "absolute top-[70%] left-[-100px] w-[600px] h-[600px] rounded-full bg-sky-200/25 blur-[150px]";
+    }
+  }
+
+  if (btnThemeToggle) {
+    btnThemeToggle.addEventListener('click', () => {
+      const isCurrentlyDark = htmlEl.classList.contains('dark');
+      applyTheme(!isCurrentlyDark);
+      playChime(isCurrentlyDark ? 659.25 : 523.25, 0.25, 'sine');
+    });
+  }
+
+  // --- 1. WEB AUDIO API SYNTHESIZER ---
+  let audioCtx = null;
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+  function unlockAudio() {
+    const ctx = getAudioContext();
+    if (ctx && ctx.state === 'suspended') ctx.resume();
+  }
+  ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(evt => {
+    window.addEventListener(evt, unlockAudio, { once: true, passive: true });
+  });
+
+  function playChime(freq, duration = 1.0, type = 'sine') {
+    if (isGlobalMuted) return;
+    try {
+      const ctx = getAudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch (e) {
+      console.warn('Audio tone err', e);
+    }
+  }
+
+  // Multi-chirp Baby Giggle Synthesizer
+  function playBabyGiggle(e) {
+    triggerGiggleVisuals(e);
+    if (isGlobalMuted) return;
+    try {
+      const ctx = getAudioContext();
+      const now = ctx.currentTime;
+      const chirps = [
+        { delay: 0.00, startF: 620, endF: 880, dur: 0.08, vol: 0.35 },
+        { delay: 0.09, startF: 750, endF: 1040, dur: 0.08, vol: 0.38 },
+        { delay: 0.18, startF: 820, endF: 1120, dur: 0.09, vol: 0.40 },
+        { delay: 0.28, startF: 720, endF: 980, dur: 0.08, vol: 0.35 },
+        { delay: 0.37, startF: 880, endF: 1220, dur: 0.10, vol: 0.42 },
+        { delay: 0.48, startF: 960, endF: 1180, dur: 0.11, vol: 0.35 }
+      ];
+
+      chirps.forEach(c => {
+        const t = now + c.delay;
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(c.startF, t);
+        osc.frequency.exponentialRampToValueAtTime(c.endF, t + c.dur);
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(c.vol, t + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.001, t + c.dur);
+        osc.connect(g);
+        g.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + c.dur + 0.02);
+      });
+    } catch (err) {
+      console.warn('Giggle synthesis error', err);
+    }
+  }
+
+  function triggerGiggleVisuals(e) {
+    const wrap = document.getElementById('pip-character-wrapper');
+    if (wrap) {
+      wrap.classList.remove('pip-giggle-anim');
+      void wrap.offsetWidth;
+      wrap.classList.add('pip-giggle-anim');
+      setTimeout(() => wrap.classList.remove('pip-giggle-anim'), 650);
+    }
+    spawnFloatingGiggleParticles(e);
+  }
+
+  const fxContainer = document.getElementById('pip-giggle-fx');
+  const words = ['Hehehe! ✨', 'Teehee! 💖', 'Pip is happy! 💕', 'Tickles! 🍼', 'Awoo! ⭐'];
+  function spawnFloatingGiggleParticles(e) {
+    if (!fxContainer) return;
+    let cx = fxContainer.clientWidth / 2;
+    let cy = fxContainer.clientHeight / 2;
+    if (e) {
+      const rect = fxContainer.getBoundingClientRect();
+      if (e.touches && e.touches[0]) {
+        cx = e.touches[0].clientX - rect.left;
+        cy = e.touches[0].clientY - rect.top;
+      } else if (e.clientX !== undefined) {
+        cx = e.clientX - rect.left;
+        cy = e.clientY - rect.top;
+      }
+    }
+    const b = document.createElement('div');
+    b.className = 'giggle-particle px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-headline text-xs font-bold shadow-lg whitespace-nowrap';
+    b.textContent = words[Math.floor(Math.random() * words.length)];
+    b.style.left = `${cx}px`;
+    b.style.top = `${cy}px`;
+    b.style.setProperty('--dx', `${(Math.random() - 0.5) * 50}px`);
+    fxContainer.appendChild(b);
+    setTimeout(() => b.remove(), 1200);
+  }
+
+  // --- 2. SMOOTH 3D HEAD TILT, IDLE BREATHING & ADORABLE EYE TRACKING ---
+  const creatureStage = document.getElementById('pip-3d-card');
+  const pipImg = document.getElementById('pip-main-img');
+  const pipWrapper = document.getElementById('pip-character-wrapper');
+  const pupilL = document.getElementById('pupil-left');
+  const pupilR = document.getElementById('pupil-right');
+
+  // Interpolated smooth motion states
+  let curTiltX = 0, curTiltY = 0, curTiltZ = 0;
+  let targetTiltX = 0, targetTiltY = 0, targetTiltZ = 0;
+  let curHeadX = 0, curHeadY = 0;
+  let targetHeadX = 0, targetHeadY = 0;
+
+  // Eye pupil smooth lerp states
+  let curEyeLX = 0, curEyeLY = 0;
+  let targetEyeLX = 0, targetEyeLY = 0;
+  let curEyeRX = 0, curEyeRY = 0;
+  let targetEyeRX = 0, targetEyeRY = 0;
+
+  let lastInteractionTime = 0;
+  const IDLE_TIMEOUT_MS = 1800; // 1.8 seconds of stillness -> smooth return to neutral idle breathing
+
+  function updatePointerTracking(clientX, clientY) {
+    lastInteractionTime = performance.now();
+
+    if (!creatureStage) return;
+    const rect = creatureStage.getBoundingClientRect();
+    const creatureCenterX = rect.left + rect.width / 2;
+    const creatureCenterY = rect.top + rect.height * 0.42; // centered at Pip's face/eyes
+
+    const deltaX = clientX - creatureCenterX;
+    const deltaY = clientY - creatureCenterY;
+
+    // Window dimensions for proportional tracking
+    const winW = window.innerWidth || 1000;
+    const winH = window.innerHeight || 800;
+
+    const normX = Math.max(-1, Math.min(1, deltaX / (winW * 0.5)));
+    const normY = Math.max(-1, Math.min(1, deltaY / (winH * 0.5)));
+
+    // Smooth 3D tilt angles (Pip tilts and turns head towards cursor)
+    targetTiltX = -normY * 11; // tilt up/down
+    targetTiltY = normX * 13;  // turn left/right
+    targetTiltZ = normX * 3;   // slight cute head cant
+    targetHeadX = normX * 7;   // subtle lateral parallax
+    targetHeadY = normY * 5;
+
+    // Eye tracking: calculate angle to cursor from Pip's eyes
+    if (pupilL && pupilR) {
+      const rectL = pupilL.getBoundingClientRect();
+      const rectR = pupilR.getBoundingClientRect();
+
+      const dxL = clientX - (rectL.left + rectL.width / 2);
+      const dyL = clientY - (rectL.top + rectL.height / 2);
+      const distL = Math.hypot(dxL, dyL) || 1;
+      const maxEyeOffset = 4.2; // stay naturally inside button eye socket
+      const scaleL = Math.min(distL / 100, 1.0) * maxEyeOffset;
+      targetEyeLX = (dxL / distL) * scaleL;
+      targetEyeLY = (dyL / distL) * scaleL;
+
+      const dxR = clientX - (rectR.left + rectR.width / 2);
+      const dyR = clientY - (rectR.top + rectR.height / 2);
+      const distR = Math.hypot(dxR, dyR) || 1;
+      const scaleR = Math.min(distR / 100, 1.0) * maxEyeOffset;
+      targetEyeRX = (dxR / distR) * scaleR;
+      targetEyeRY = (dyR / distR) * scaleR;
+    }
+  }
+
+  // Smooth render loop running on requestAnimationFrame
+  function render3DLoop(timestamp) {
+    const timeSinceInteraction = performance.now() - lastInteractionTime;
+    const isIdle = timeSinceInteraction > IDLE_TIMEOUT_MS;
+
+    if (isIdle) {
+      // Gentle return to neutral pose
+      targetTiltX = 0;
+      targetTiltY = 0;
+      targetTiltZ = 0;
+      targetHeadX = 0;
+      targetHeadY = 0;
+      targetEyeLX = 0;
+      targetEyeLY = 0;
+      targetEyeRX = 0;
+      targetEyeRY = 0;
+
+      // Subtle, magical idle breathing animation (breathing softly atop dream cloud)
+      const idleTime = timestamp * 0.0016;
+      const idleBobY = Math.sin(idleTime) * 3.8;
+      const idleSwayTilt = Math.sin(idleTime * 0.7) * 1.5;
+
+      targetHeadY = idleBobY;
+      targetTiltZ = idleSwayTilt;
+    }
+
+    // Gentle spring-like lerp factor (0.075 for soft, magical, lifelike transitions)
+    const lerp = 0.075;
+    curTiltX += (targetTiltX - curTiltX) * lerp;
+    curTiltY += (targetTiltY - curTiltY) * lerp;
+    curTiltZ += (targetTiltZ - curTiltZ) * lerp;
+    curHeadX += (targetHeadX - curHeadX) * lerp;
+    curHeadY += (targetHeadY - curHeadY) * lerp;
+
+    curEyeLX += (targetEyeLX - curEyeLX) * lerp;
+    curEyeLY += (targetEyeLY - curEyeLY) * lerp;
+    curEyeRX += (targetEyeRX - curEyeRX) * lerp;
+    curEyeRY += (targetEyeRY - curEyeRY) * lerp;
+
+    // Apply 3D perspective to Pip's character directly (Frameless 3D creature)
+    if (pipWrapper) {
+      pipWrapper.style.transform = `perspective(900px) rotateX(${curTiltX.toFixed(2)}deg) rotateY(${curTiltY.toFixed(2)}deg) rotateZ(${curTiltZ.toFixed(2)}deg) translate3d(${curHeadX.toFixed(2)}px, ${curHeadY.toFixed(2)}px, 0)`;
+    }
+
+    // Apply pupil catchlight tracking
+    if (pupilL) {
+      pupilL.style.transform = `translate3d(${curEyeLX.toFixed(2)}px, ${curEyeLY.toFixed(2)}px, 0)`;
+    }
+    if (pupilR) {
+      pupilR.style.transform = `translate3d(${curEyeRX.toFixed(2)}px, ${curEyeRY.toFixed(2)}px, 0)`;
+    }
+
+    requestAnimationFrame(render3DLoop);
+  }
+  requestAnimationFrame(render3DLoop);
+
+  // Mouse & Touch events
+  window.addEventListener('mousemove', (e) => {
+    updatePointerTracking(e.clientX, e.clientY);
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      updatePointerTracking(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    lastInteractionTime = performance.now() - IDLE_TIMEOUT_MS; // return smoothly to idle
+  }, { passive: true });
+
+  // Touchstart / click on Pip triggers giggle & star burst
+  if (creatureStage) {
+    creatureStage.addEventListener('click', (e) => {
+      playBabyGiggle(e);
+      if (window.burstRetroStars) window.burstRetroStars(e.clientX, e.clientY, 16);
+    });
+  }
+
+  // --- 3. HIDDEN WAKING LULLABY EASTER EGG (SLEEPING PIP) ---
+  const sleepAvatar = document.getElementById('sleeping-pip-avatar');
+  const btnPoke = document.getElementById('btn-poke-pip');
+  const pokeCounterVal = document.getElementById('poke-counter-val');
+  const sleepWrap = document.getElementById('sleeping-pip-wrapper');
+  const secretModal = document.getElementById('waking-secret-modal');
+  const btnCloseSecret = document.getElementById('btn-close-secret-modal');
+  const btnReplaySecret = document.getElementById('btn-replay-secret-lullaby');
+
+  let pokeCount = 0;
+  let pokeTimer = null;
+
+  function pokeSleepingPip() {
+    unlockAudio();
+    pokeCount++;
+    if (pokeCounterVal) pokeCounterVal.textContent = Math.min(pokeCount, 3);
+    playChime(784 + (pokeCount * 60), 0.35, 'triangle');
+
+    if (sleepWrap) {
+      sleepWrap.style.transform = `scale(${1 + pokeCount * 0.05}) rotate(${pokeCount % 2 === 0 ? 4 : -4}deg)`;
+      setTimeout(() => sleepWrap.style.transform = '', 250);
+    }
+
+    if (pokeCount >= 3) {
+      triggerWakeSequence();
+      pokeCount = 0;
+      if (pokeCounterVal) pokeCounterVal.textContent = 0;
+    }
+
+    clearTimeout(pokeTimer);
+    pokeTimer = setTimeout(() => {
+      pokeCount = 0;
+      if (pokeCounterVal) pokeCounterVal.textContent = 0;
+    }, 4000);
+  }
+
+  function triggerWakeSequence() {
+    if (sleepWrap) {
+      sleepWrap.classList.remove('sleeping-breathe');
+      sleepWrap.classList.add('pip-wake-anim');
+      setTimeout(() => {
+        sleepWrap.classList.remove('pip-wake-anim');
+        sleepWrap.classList.add('sleeping-breathe');
+      }, 1400);
+    }
+
+    playSecretMusicBoxLullaby();
+
+    setTimeout(() => {
+      if (secretModal) {
+        secretModal.classList.remove('opacity-0', 'pointer-events-none');
+        secretModal.classList.add('opacity-100', 'pointer-events-auto');
+        const card = document.getElementById('waking-modal-card');
+        if (card) card.classList.remove('scale-95');
+      }
+    }, 600);
+  }
+
+  function playSecretMusicBoxLullaby() {
+    if (isGlobalMuted) return;
+    try {
+      const ctx = getAudioContext();
+      const now = ctx.currentTime;
+      const notes = [
+        { f: 523.25, time: 0.0, dur: 1.2 },
+        { f: 659.25, time: 0.25, dur: 1.2 },
+        { f: 783.99, time: 0.50, dur: 1.2 },
+        { f: 1046.50, time: 0.75, dur: 1.4 },
+        { f: 880.00, time: 1.10, dur: 1.2 },
+        { f: 783.99, time: 1.40, dur: 1.2 },
+        { f: 659.25, time: 1.70, dur: 1.6 },
+        { f: 523.25, time: 2.10, dur: 2.0 },
+        { f: 587.33, time: 2.50, dur: 1.2 },
+        { f: 783.99, time: 2.90, dur: 2.2 }
+      ];
+
+      notes.forEach(n => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(n.f, now + n.time);
+        g.gain.setValueAtTime(0, now + n.time);
+        g.gain.linearRampToValueAtTime(0.3, now + n.time + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + n.time + n.dur);
+        osc.connect(g);
+        g.connect(ctx.destination);
+        osc.start(now + n.time);
+        osc.stop(now + n.time + n.dur);
+      });
+    } catch (e) {
+      console.warn('Lullaby synth err', e);
+    }
+  }
+
+  if (sleepAvatar) sleepAvatar.addEventListener('click', pokeSleepingPip);
+  if (btnPoke) btnPoke.addEventListener('click', pokeSleepingPip);
+  if (btnCloseSecret) {
+    btnCloseSecret.addEventListener('click', () => {
+      if (secretModal) {
+        secretModal.classList.remove('opacity-100', 'pointer-events-auto');
+        secretModal.classList.add('opacity-0', 'pointer-events-none');
+      }
+    });
+  }
+  if (btnReplaySecret) btnReplaySecret.addEventListener('click', playSecretMusicBoxLullaby);
+
+  // --- 4. "STACK THE STAR BLOCKS" MINI-GAME ---
+  const canvasGame = document.getElementById('stack-game-canvas');
+  const btnDropBlock = document.getElementById('btn-drop-block');
+  const btnResetGame = document.getElementById('btn-reset-game');
+  const scoreEl = document.getElementById('game-score');
+  const comboEl = document.getElementById('game-combo');
+  const bestEl = document.getElementById('game-best');
+  const msgEl = document.getElementById('game-message');
+
+  if (canvasGame) {
+    const gctx = canvasGame.getContext('2d');
+    const GW = 400, GH = 360, BH = 24;
+    // High-DPI canvas fix for retina displays
+    const dpr = window.devicePixelRatio || 1;
+    canvasGame.width = GW * dpr;
+    canvasGame.height = GH * dpr;
+    canvasGame.style.width = GW + 'px';
+    canvasGame.style.height = GH + 'px';
+    gctx.scale(dpr, dpr);
+    const colors = [
+      { bg: '#ffb0c9', stroke: '#ff94b9', icon: '☁️' },
+      { bg: '#75d4e8', stroke: '#008092', icon: '🌙' },
+      { bg: '#ffe16d', stroke: '#cfb33e', icon: '⭐' },
+      { bg: '#ffbfd2', stroke: '#984062', icon: '🌸' }
+    ];
+
+    let blocks = [{ x: 120, y: GH - 36, w: 160, cIdx: 0 }];
+    let cur = null;
+    let score = 0, combo = 0, best = 0;
+    let gameOver = false;
+
+    function resetGame() {
+      blocks = [{ x: 120, y: GH - 36, w: 160, cIdx: 0 }];
+      score = 0; combo = 0; gameOver = false;
+      updateUI();
+      if (msgEl) msgEl.textContent = 'Tap "Drop Block" or canvas to stack!';
+      spawnBlock();
+    }
+
+    function spawnBlock() {
+      const top = blocks[blocks.length - 1];
+      cur = {
+        x: 20,
+        y: top.y - BH - 3,
+        w: top.w,
+        speed: 3 + Math.min(blocks.length * 0.25, 4.5),
+        dir: 1,
+        cIdx: blocks.length % colors.length
+      };
+    }
+
+    function dropBlock() {
+      if (gameOver) { resetGame(); return; }
+      if (!cur) return;
+      const top = blocks[blocks.length - 1];
+      const diff = cur.x - top.x;
+      const tol = 6;
+
+      if (Math.abs(diff) <= tol) {
+        cur.x = top.x;
+        combo++;
+        score += 15 + combo * 5;
+        playChime(523.25 + combo * 55, 0.45);
+        if (msgEl) msgEl.textContent = `🌟 PERFECT SNUGGLE! +${combo}x Combo!`;
+      } else if (cur.x + cur.w <= top.x || cur.x >= top.x + top.w) {
+        gameOver = true;
+        playChime(220, 0.4, 'sawtooth');
+        if (msgEl) msgEl.textContent = '💤 Tower toppled! Tap reset to retry!';
+        return;
+      } else {
+        combo = 0;
+        score += 5;
+        if (diff > 0) cur.w -= diff;
+        else { cur.w += diff; cur.x = top.x; }
+        playChime(440, 0.35);
+        if (msgEl) msgEl.textContent = '✨ Stacked! Trimmed edges.';
+      }
+
+      blocks.push({ x: cur.x, y: cur.y, w: cur.w, cIdx: cur.cIdx });
+
+      if (cur.y < 120) {
+        const shift = 120 - cur.y;
+        blocks.forEach(b => b.y += shift);
+      }
+      updateUI();
+      spawnBlock();
+    }
+
+    function updateUI() {
+      if (scoreEl) scoreEl.textContent = blocks.length - 1;
+      if (comboEl) comboEl.textContent = combo + 'x';
+      if (score > best) best = score;
+      if (bestEl) bestEl.textContent = best;
+    }
+
+    function loop() {
+      gctx.clearRect(0, 0, GW, GH);
+      gctx.fillStyle = htmlEl.classList.contains('dark') ? '#1c1e31' : '#ecd8ca';
+      gctx.fillRect(80, GH - 10, GW - 160, 8);
+
+      blocks.forEach(b => {
+        const c = colors[b.cIdx];
+        gctx.fillStyle = c.bg;
+        gctx.strokeStyle = c.stroke;
+        gctx.lineWidth = 2;
+        gctx.beginPath();
+        gctx.roundRect(b.x, b.y, b.w, BH, 6);
+        gctx.fill();
+        gctx.stroke();
+        gctx.fillStyle = '#101224';
+        gctx.font = '12px Quicksand';
+        gctx.fillText(c.icon, b.x + 6, b.y + 16);
+      });
+
+      if (cur && !gameOver) {
+        cur.x += cur.speed * cur.dir;
+        if (cur.x + cur.w > GW - 10) cur.dir = -1;
+        else if (cur.x < 10) cur.dir = 1;
+
+        const c = colors[cur.cIdx];
+        gctx.fillStyle = c.bg;
+        gctx.strokeStyle = '#ffffff';
+        gctx.lineWidth = 2;
+        gctx.beginPath();
+        gctx.roundRect(cur.x, cur.y, cur.w, BH, 6);
+        gctx.fill();
+        gctx.stroke();
+        gctx.fillStyle = '#101224';
+        gctx.font = '12px Quicksand';
+        gctx.fillText(c.icon, cur.x + 6, cur.y + 16);
+      }
+      requestAnimationFrame(loop);
+    }
+    resetGame();
+    loop();
+
+    if (btnDropBlock) btnDropBlock.addEventListener('click', dropBlock);
+    if (btnResetGame) btnResetGame.addEventListener('click', resetGame);
+    canvasGame.addEventListener('click', dropBlock);
+  }
+
+  // --- 5. PIP DREAM CHAT BOT (CHARACTER CHATS BACK) ---
+  const chatForm = document.getElementById('chat-input-form');
+  const chatInput = document.getElementById('chat-text-input');
+  const chatBox = document.getElementById('chat-box');
+  const chatPrompts = document.querySelectorAll('.chat-prompt');
+
+  const answers = {
+    "what are you dreaming right now?": "Right now, I'm dreaming about a marshmallow river with floating baby swans that whistle lullabies in 432 Hz! ✨",
+    "can you chase away my monsters?": "Consider them handled! 🛡️ I blow my golden star lantern bubbles at them until they turn into sleepy lavender sheep!",
+    "tell me a tiny bedtime story!": "Once upon a twilight, a tiny star fell into a bowl of warm milk. Instead of going out, it started humming the softest lullaby in the cosmos. 🌙 Goodnight dreamer!",
+    "how do dreams smell?": "Dreams smell like warm honey cookies, sun-dried cotton blankets, and a tiny dash of lavender mist! 🍯🌸"
+  };
+
+  function appendChat(text, isUser = false) {
+    if (!chatBox) return;
+    const wrap = document.createElement('div');
+    wrap.className = `flex items-start gap-2.5 max-w-xl ${isUser ? 'ml-auto flex-row-reverse' : ''}`;
+    const avatar = document.createElement('div');
+    avatar.className = `w-7 h-7 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5 ${isUser ? 'bg-secondary/30 text-secondary' : 'bg-primary/20 text-primary'}`;
+    avatar.textContent = isUser ? '⭐' : '🍼';
+
+    const b = document.createElement('div');
+    b.className = `p-3 rounded-2xl ${isUser ? 'rounded-tr-sm bg-secondary/20 text-on-surface' : 'rounded-tl-sm bg-surface-container-high text-on-surface'} font-body text-xs sm:text-sm leading-relaxed shadow-sm`;
+    b.textContent = text;
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(b);
+    chatBox.appendChild(wrap);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    if (!isUser) {
+      playChime(880, 0.2, 'sine');
+      setTimeout(() => playChime(1174.66, 0.25, 'triangle'), 70);
+    }
+  }
+
+  
+function handleSend(msg) {
+  const text = msg.trim();
+  if (!text) return;
+
+  appendChat(text, true);
+
+  const key = text.toLowerCase()
+    .replace(/[.!?,]/g, "")
+    .trim();
+
+  let reply = answers[key];
+
+  if (!reply) {
+    const lower = text.toLowerCase();
+
+    if (/^(hi|hii+|hello|hey|heyy|hello pip)\b/.test(lower)) {
+      reply = "Hiii! I'm happy you're here. How's your day going?";
+    } else if (/how are you|how r u/.test(lower)) {
+      reply = "I'm feeling cozy and a little sleepy today. How about you?";
+    } else if (/your name|who are you/.test(lower)) {
+      reply = "I'm Pip, your tiny companion from the midnight dreams!";
+    } else if (/what are you doing|wyd/.test(lower)) {
+      reply = "Just floating among the stars and waiting for a little company. What about you?";
+    } else if (/sad|upset|unhappy|lonely|depressed/.test(lower)) {
+      reply = "Aww, I'm here to listen. Want to tell me what's been going on?";
+    } else if (/happy|excited|great day|good news/.test(lower)) {
+      reply = "That sounds lovely! Tell me more, I want to hear all about it!";
+    } else if (/tired|sleepy|exhausted/.test(lower)) {
+      reply = "Sounds like you could use a little rest. Has today been a long one?";
+    } else if (/bored|boring/.test(lower)) {
+      reply = "Let's find something fun to talk about! What's something you've been thinking about lately?";
+    } else if (/thank you|thanks|thx/.test(lower)) {
+      reply = "You're always welcome! I'm glad we got to chat.";
+    } else if (/bye|goodbye|good night|gn\b/.test(lower)) {
+      reply = "Goodnight, little dreamer. Wishing you the coziest dreams!";
+    } else if (/\?$/.test(text)) {
+      reply = "That's an interesting question! Can you tell me a little more so I can understand what you mean?";
+    } else {
+      reply = "I'm listening! Tell me a little more about that, I want to understand.";
+    }
+  }
+
+  setTimeout(() => appendChat(reply, false), 500);
+}
+
+
+  if (chatForm && chatInput) {
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSend(chatInput.value);
+      chatInput.value = '';
+    });
+  }
+  chatPrompts.forEach(p => {
+    p.addEventListener('click', () => {
+      handleSend(p.getAttribute('data-msg'));
+    });
+  });
+
+  // --- 6. SCROLL OBSERVER FOR STORY PROGRESS ---
+  const chapterCards = document.querySelectorAll('.story-chapter-card');
+  const progBar = document.getElementById('story-progress-bar');
+  const progText = document.getElementById('story-progress-text');
+
+  if ('IntersectionObserver' in window && chapterCards.length) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          chapterCards.forEach(c => c.classList.remove('active-chapter'));
+          entry.target.classList.add('active-chapter');
+          const chap = entry.target.getAttribute('data-chapter');
+          if (progText) progText.textContent = `Chapter ${chap} of 3`;
+          if (progBar) progBar.style.width = `${(chap / 3) * 100}%`;
+        }
+      });
+    }, { threshold: 0.5 });
+    chapterCards.forEach(c => observer.observe(c));
+  }
+
+  // --- 7. BUTTON TRIGGERS ---
+  const btnHeroTickle = document.getElementById('btn-hero-tickle');
+  const btnAudioGiggle = document.getElementById('btn-audio-giggle');
+  if (btnHeroTickle) btnHeroTickle.addEventListener('click', (e) => playBabyGiggle(e));
+  if (btnAudioGiggle) btnAudioGiggle.addEventListener('click', (e) => playBabyGiggle(e));
+
+  document.querySelectorAll('.synth-key').forEach(k => {
+    k.addEventListener('click', () => playChime(parseFloat(k.getAttribute('data-freq')), 1.2));
+  });
+  document.querySelectorAll('.story-chime-btn, .project-tone-btn').forEach(b => {
+    b.addEventListener('click', () => playChime(parseFloat(b.getAttribute('data-freq') || '523'), 0.8));
+  });
+
+  // --- 8. ADVANCED INTERACTIVE RETRO STARS PARTICLE ENGINE ---
+  const trailCanvas = document.getElementById('star-trail-canvas');
+  if (trailCanvas) {
+    const tctx = trailCanvas.getContext('2d');
+    const colors = [
+      '#ffbfd2', // pastel pink
+      '#ff94b9', // vibrant pink
+      '#ffe16d', // star yellow
+      '#edcf57', // glowing gold
+      '#75d4e8', // celestial cyan
+      '#a3eeff', // soft cyan
+      '#e0e0fa', // stardust lavender
+      '#ffffff'  // pure cloud white
+    ];
+    const shapes = ['star4', 'star5', 'sparkle', 'pixel', 'orb'];
+    let stars = [];
+    const MAX_STARS = 65; // strictly capped for 60fps performance
+
+    function resizeTrail() {
+      const dpr = window.devicePixelRatio || 1;
+      trailCanvas.width = window.innerWidth * dpr;
+      trailCanvas.height = window.innerHeight * dpr;
+      trailCanvas.style.width = window.innerWidth + 'px';
+      trailCanvas.style.height = window.innerHeight + 'px';
+      tctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resizeTrail, { passive: true });
+    resizeTrail();
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function renderStar(s) {
+      tctx.save();
+      tctx.translate(s.x, s.y);
+      tctx.rotate(s.rot);
+      tctx.globalAlpha = Math.max(0, Math.min(1, s.life * s.twinkle));
+      tctx.fillStyle = s.color;
+      if (s.glow) {
+        tctx.shadowColor = s.color;
+        tctx.shadowBlur = 8;
+      }
+      const sz = s.size;
+
+      if (s.shape === 'star4') {
+        // 4-point retro star
+        tctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+          tctx.rotate(Math.PI / 2);
+          tctx.lineTo(sz, 0);
+          tctx.lineTo(sz * 0.28, sz * 0.28);
+        }
+        tctx.closePath();
+        tctx.fill();
+      } else if (s.shape === 'star5') {
+        // 5-point classic star
+        tctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+          tctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * sz, -Math.sin((18 + i * 72) * Math.PI / 180) * sz);
+          tctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (sz * 0.42), -Math.sin((54 + i * 72) * Math.PI / 180) * (sz * 0.42));
+        }
+        tctx.closePath();
+        tctx.fill();
+      } else if (s.shape === 'sparkle') {
+        // Elongated diamond sparkle
+        tctx.beginPath();
+        tctx.moveTo(0, -sz * 1.3);
+        tctx.quadraticCurveTo(0, 0, sz * 0.35, 0);
+        tctx.quadraticCurveTo(0, 0, 0, sz * 1.3);
+        tctx.quadraticCurveTo(0, 0, -sz * 0.35, 0);
+        tctx.quadraticCurveTo(0, 0, 0, -sz * 1.3);
+        tctx.closePath();
+        tctx.fill();
+      } else if (s.shape === 'pixel') {
+        // Retro pixel cross
+        const px = Math.max(1.5, sz * 0.35);
+        tctx.fillRect(-px / 2, -sz, px, sz * 2);
+        tctx.fillRect(-sz, -px / 2, sz * 2, px);
+        tctx.fillRect(-px, -px, px * 2, px * 2);
+      } else {
+        // Soft glowing stardust orb
+        tctx.beginPath();
+        tctx.arc(0, 0, Math.max(1, sz * 0.6), 0, Math.PI * 2);
+        tctx.fill();
+      }
+      tctx.restore();
+    }
+
+    function addTrailParticle(x, y) {
+      if (prefersReducedMotion) return;
+      if (stars.length >= MAX_STARS) stars.shift();
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const sz = 2.5 + Math.random() * 3.5;
+      stars.push({
+        x: x + (Math.random() - 0.5) * 6,
+        y: y + (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: -0.35 - Math.random() * 0.6, // gentle upward drift
+        friction: 0.98,
+        rot: Math.random() * Math.PI * 2,
+        vrot: (Math.random() - 0.5) * 0.08,
+        size: sz,
+        color: color,
+        shape: shape,
+        life: 1.0,
+        decay: 0.024 + Math.random() * 0.018,
+        phase: Math.random() * Math.PI,
+        twinkle: 1,
+        glow: Math.random() > 0.4
+      });
+    }
+
+    function burstRetroStars(x, y, count = 14) {
+      if (prefersReducedMotion) return;
+      const posX = x !== undefined ? x : window.innerWidth / 2;
+      const posY = y !== undefined ? y : window.innerHeight / 2;
+      const burstCount = Math.min(count, MAX_STARS - stars.length + 10);
+      for (let i = 0; i < burstCount; i++) {
+        if (stars.length >= MAX_STARS) stars.shift();
+        const angle = (i / burstCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
+        const speed = 2.2 + Math.random() * 4.8;
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const sz = 3.5 + Math.random() * 4.5;
+        stars.push({
+          x: posX,
+          y: posY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 0.8,
+          friction: 0.93,
+          rot: Math.random() * Math.PI * 2,
+          vrot: (Math.random() - 0.5) * 0.15,
+          size: sz,
+          color: color,
+          shape: shape,
+          life: 1.0,
+          decay: 0.02 + Math.random() * 0.02,
+          phase: Math.random() * Math.PI,
+          twinkle: 1,
+          glow: true
+        });
+      }
+    }
+    window.burstRetroStars = burstRetroStars;
+
+    let isAnimActive = true;
+    document.addEventListener('visibilitychange', () => {
+      isAnimActive = !document.hidden;
+    });
+
+    function animStars() {
+      if (!isAnimActive) {
+        requestAnimationFrame(animStars);
+        return;
+      }
+      tctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (let i = stars.length - 1; i >= 0; i--) {
+        const s = stars[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.vx *= s.friction;
+        s.vy *= s.friction;
+        s.rot += s.vrot;
+        s.life -= s.decay;
+        s.phase += 0.12;
+        s.twinkle = 0.75 + 0.25 * Math.sin(s.phase);
+
+        if (s.life <= 0 || s.x < -30 || s.x > window.innerWidth + 30 || s.y < -30 || s.y > window.innerHeight + 30) {
+          stars.splice(i, 1);
+          continue;
+        }
+        renderStar(s);
+      }
+      requestAnimationFrame(animStars);
+    }
+    requestAnimationFrame(animStars);
+
+    // Track Cursor Movement for Gentle Star Trail
+    let lastTrackX = null, lastTrackY = null;
+    let lastTrackTime = 0;
+
+    function handlePointerTrail(cx, cy, isTouch = false) {
+      const now = performance.now();
+      if (lastTrackX === null) {
+        lastTrackX = cx;
+        lastTrackY = cy;
+        lastTrackTime = now;
+        return;
+      }
+      const dist = Math.hypot(cx - lastTrackX, cy - lastTrackY);
+      const minDistance = isTouch ? 22 : 14;
+      const minInterval = isTouch ? 35 : 22;
+
+      if (dist >= minDistance && now - lastTrackTime > minInterval) {
+        addTrailParticle(cx, cy);
+        if (dist > minDistance * 2.2) {
+          addTrailParticle((lastTrackX + cx) / 2, (lastTrackY + cy) / 2);
+        }
+        lastTrackX = cx;
+        lastTrackY = cy;
+        lastTrackTime = now;
+      }
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      handlePointerTrail(e.clientX, e.clientY, false);
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        handlePointerTrail(e.touches[0].clientX, e.touches[0].clientY, true);
+      }
+    }, { passive: true });
+
+    // Click & Touch Tap Bursts Across the Entire Page
+    window.addEventListener('pointerdown', (e) => {
+      burstRetroStars(e.clientX, e.clientY, 12);
+
+      // Playful bouncy micro-interaction on clicked button or card
+      const interactiveEl = e.target.closest('button, a, [role="button"], .synth-key, .story-chapter-card, input, select');
+      if (interactiveEl) {
+        interactiveEl.classList.remove('pop-bounce');
+        void interactiveEl.offsetWidth;
+        interactiveEl.classList.add('pop-bounce');
+        setTimeout(() => interactiveEl.classList.remove('pop-bounce'), 360);
+      }
+    }, { passive: true });
+
+    // Header & Footer Special Star Buttons
+    const btnBurst = document.getElementById('btn-star-burst');
+    if (btnBurst) {
+      btnBurst.addEventListener('click', (e) => {
+        burstRetroStars(e.clientX, e.clientY, 20);
+        playChime(1046.5, 0.45);
+      });
+    }
+    const footerEgg = document.getElementById('footer-easter-egg');
+    if (footerEgg) {
+      footerEgg.addEventListener('click', (e) => {
+        burstRetroStars(e.clientX, e.clientY, 22);
+        playChime(1200, 0.5);
+      });
+    }
+  }
+
+  // --- 9. COSMIC 3D PARALLAX CONTROLLER ---
+  const parallaxLayers = document.querySelectorAll('.parallax-layer');
+  let mouseTargetX = 0, mouseTargetY = 0;
+  let mouseCurX = 0, mouseCurY = 0;
+
+  if (parallaxLayers.length && (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    window.addEventListener('mousemove', (e) => {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      mouseTargetX = e.clientX - centerX;
+      mouseTargetY = e.clientY - centerY;
+    }, { passive: true });
+
+    function parallaxLoop() {
+      // Smooth lerp
+      mouseCurX += (mouseTargetX - mouseCurX) * 0.06;
+      mouseCurY += (mouseTargetY - mouseCurY) * 0.06;
+
+      parallaxLayers.forEach(layer => {
+        const depth = parseFloat(layer.getAttribute('data-depth') || '0.03');
+        const offsetX = (mouseCurX * depth).toFixed(1);
+        const offsetY = (mouseCurY * depth).toFixed(1);
+        layer.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+      });
+      requestAnimationFrame(parallaxLoop);
+    }
+    requestAnimationFrame(parallaxLoop);
+  }
+
+  // --- 10. UNIVERSAL 3D CARD TILT & SPECULAR STARLIGHT GLARE ---
+  const allDreamCards = document.querySelectorAll('#projects .grid > div, .story-chapter-card, #blocks-game > div, #sleeping-pip-section > div, #lullaby-lab .grid > div, #chat-section > div');
+  allDreamCards.forEach(card => {
+    card.classList.add('dream-card-3d');
+
+    card.addEventListener('mousemove', (e) => {
+      if (window.innerWidth < 1024) return; // desktop only
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--mouse-x', `${((x / rect.width) * 100).toFixed(1)}%`);
+      card.style.setProperty('--mouse-y', `${((y / rect.height) * 100).toFixed(1)}%`);
+
+      const normX = (x - rect.width / 2) / (rect.width / 2);
+      const normY = (y - rect.height / 2) / (rect.height / 2);
+      const rotX = -normY * 4.5;
+      const rotY = normX * 4.5;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-3px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // --- 11. MOBILE NAVIGATION DRAWER CONTROLLER ---
+  const btnMobileMenu = document.getElementById('btn-mobile-menu');
+  const btnMobileClose = document.getElementById('btn-mobile-menu-close');
+  const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
+  const mobilePanel = document.getElementById('mobile-menu-panel');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  function openMobileMenu() {
+    if (!mobileBackdrop || !mobilePanel) return;
+    mobileBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+    mobileBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+    mobilePanel.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-16px]');
+    mobilePanel.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+    if (btnMobileMenu) btnMobileMenu.setAttribute('aria-expanded', 'true');
+    playChime(784, 0.2);
+  }
+
+  function closeMobileMenu() {
+    if (!mobileBackdrop || !mobilePanel) return;
+    mobileBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    mobileBackdrop.classList.add('opacity-0', 'pointer-events-none');
+    mobilePanel.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+    mobilePanel.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-16px]');
+    if (btnMobileMenu) btnMobileMenu.setAttribute('aria-expanded', 'false');
+  }
+
+  if (btnMobileMenu) btnMobileMenu.addEventListener('click', openMobileMenu);
+  if (btnMobileClose) btnMobileClose.addEventListener('click', closeMobileMenu);
+  if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
+  mobileNavLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  // --- 12. VIEWPORT SCROLL REVEAL OBSERVER ---
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+  if ('IntersectionObserver' in window && revealElements.length) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealElements.forEach(el => revealObserver.observe(el));
+  } else {
+    revealElements.forEach(el => el.classList.add('revealed'));
+  }
+
+  // --- 13. WISH WALL SUBMISSION ---
+  const wishForm = document.getElementById('wish-form');
+  const wishAuthor = document.getElementById('wish-author-input');
+  const wishText = document.getElementById('wish-text-input');
+  const wishList = document.getElementById('wishes-list');
+  const wishCounter = document.getElementById('wish-counter-pill');
+  let wishCount = 3;
+
+  if (wishForm) {
+    wishForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const a = wishAuthor.value.trim() || 'Anonymous Dreamer';
+      const t = wishText.value.trim();
+      if (!t) return;
+      wishCount++;
+      if (wishCounter) wishCounter.textContent = `${wishCount} Wishes`;
+
+      const item = document.createElement('div');
+      item.className = 'p-3 rounded-2xl bg-surface-container-low/90 text-xs flex flex-col gap-1 border border-primary/30 transform-gpu transition-all duration-300 pop-bounce';
+      item.innerHTML = `
+        <div class="flex items-center justify-between font-headline font-semibold text-primary">
+          <span>${a}</span>
+          <span class="font-mono text-[10px] text-tertiary">⭐ New Wish</span>
+        </div>
+        <p class="font-body text-on-surface">“${t}”</p>
+      `;
+      wishList.prepend(item);
+      wishAuthor.value = '';
+      wishText.value = '';
+      if (window.burstRetroStars) window.burstRetroStars(window.innerWidth / 2, window.innerHeight * 0.7, 16);
+      playChime(659.25, 0.5);
+    });
+  }
+
+  // Initialize Default State
+  updateMuteUI();
+})();
+</script>
+
+
+<!-- Pip's Midnight Dreams | ByteBuilders | haX.baby -->
+<footer class="pip-credits">
+  <div class="pip-credits-stars" aria-hidden="true">✦ · ˚ · ☾ · ˚ · ✧</div>
+
+  <p class="pip-credits-eyebrow">A LITTLE MAGIC, A LOT OF HEART</p>
+  <h2 class="pip-credits-title">Every dream has a story.</h2>
+
+  <p class="pip-credits-intro">
+    A little dream world built with imagination, curiosity,
+    and a touch of midnight magic.
+  </p>
+
+  <p class="pip-team-label">CREATED BY</p>
+  <p class="pip-team-name">ByteBuilders</p>
+  <p class="pip-creators">Monalisha Majhi · Renuka Bariha</p>
+
+  <button
+    class="pip-credits-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="pip-credits-panel"
+    onclick="
+      const panel = document.getElementById('pip-credits-panel');
+      const opening = panel.hidden;
+      panel.hidden = !opening;
+      this.setAttribute('aria-expanded', String(opening));
+      this.querySelector('.pip-credits-arrow').textContent =
+        opening ? '−' : '+';
+    "
+  >
+    <span>✧ Credits & Acknowledgements</span>
+    <span class="pip-credits-arrow" aria-hidden="true">+</span>
+  </button>
+
+  
+<div id="pip-credits-panel" class="pip-credits-panel" hidden>
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">☾</span>
+    <div>
+      <h3>The Creators</h3>
+      <p>
+        <strong>Monalisha Majhi and Renuka Bariha</strong><br>
+        Team ByteBuilders<br>
+        Created for haX.baby — Track 1: Pip
+      </p>
+    </div>
+  </div>
+
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">✦</span>
+    <div>
+      <h3>Character & Artwork</h3>
+      <p>
+        Pip's character artwork is from the official
+        haX.baby Track 1 asset pack.
+        All character artwork remains credited to its
+        original creators and rights holders.
+      </p>
+    </div>
+  </div>
+
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">◇</span>
+    <div>
+      <h3>Design & Development</h3>
+      <p>
+        <strong>Google Stitch</strong> — design exploration.<br>
+        <strong>Antigravity</strong> — AI-assisted design
+        and development workflow.<br>
+        <strong>ChatGPT</strong> — brainstorming,
+        coding guidance and development assistance.<br>
+        <strong>Visual Studio Code</strong> — code editor.
+      </p>
+    </div>
+  </div>
+
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">♫</span>
+    <div>
+      <h3>Audio & Sound</h3>
+      <p>
+        Interactive sounds and synthesized tones are
+        generated using the Web Audio API, a built-in
+        browser technology. No external audio track.
+      </p>
+    </div>
+  </div>
+
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">Aa</span>
+    <div>
+      <h3>Fonts & Typography</h3>
+      <p>
+        <strong>Quicksand</strong> — headings.<br>
+        <strong>Plus Jakarta Sans</strong> — body typography.<br>
+        <strong>Space Grotesk</strong> — configured
+        monospace-style typography.<br>
+        <strong>Material Symbols Outlined</strong> —
+        interface icons.<br>
+        <strong>Georgia / Times New Roman</strong> —
+        serif fallback fonts.<br>
+        Google Fonts — hosted font resources.
+      </p>
+    </div>
+  </div>
+
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">⌘</span>
+    <div>
+      <h3>Open-Source Technology</h3>
+      <p>
+        <strong>Tailwind CSS</strong> — utility-first
+        CSS framework, loaded via CDN.<br>
+        Forms and Container Queries plugins are enabled
+        in the Tailwind CDN configuration.
+      </p>
+    </div>
+  </div>
+
+  <div class="pip-credit-item">
+    <span class="pip-credit-symbol" aria-hidden="true">♡</span>
+    <div>
+      <h3>Made for haX.baby</h3>
+      <p>
+        Pip's Midnight Dreams is an interactive dream
+        world created by ByteBuilders for Track 1:
+        Pip the character.
+        Built with HTML, CSS and JavaScript, with
+        imagination, curiosity and a little midnight magic.
+      </p>
+    </div>
+  </div>
+
+  <p class="pip-credits-note">
+    Small ideas. Brighter beginnings. Sweet dreams, always.
+  </p>
+</div>
+
+
+  <p class="pip-credits-footer">
+    Made with imagination by ByteBuilders ✧
+  </p>
+</footer>
+
+<style>
+  .pip-credits {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 40px 18px 28px;
+    margin-top: 30px;
+    text-align: center;
+    color: #5c4033;
+    font-family: inherit;
+  }
+
+  .pip-credits-stars {
+    color: #a34063;
+    font-size: 20px;
+    letter-spacing: 7px;
+    margin-bottom: 14px;
+  }
+
+  .pip-credits-eyebrow {
+    color: #a34063;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin: 0 0 10px;
+  }
+
+  .pip-credits-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 400;
+    line-height: 1.25;
+    margin: 0 0 12px;
+  }
+
+  .pip-credits-intro {
+    max-width: 440px;
+    margin: 0 auto 25px;
+    font-size: 14px;
+    line-height: 1.8;
+    opacity: 0.85;
+  }
+
+  .pip-team-label {
+    color: #a34063;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+
+  .pip-team-name {
+    margin: 7px 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .pip-creators {
+    margin: 0 0 24px;
+    font-size: 13px;
+    line-height: 1.8;
+    opacity: 0.85;
+  }
+
+  .pip-credits-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    max-width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #a34063;
+    border-radius: 30px;
+    background: transparent;
+    color: #a34063;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .pip-credits-toggle:hover {
+    background: rgba(163, 64, 99, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .pip-credits-toggle:focus-visible {
+    outline: 2px solid #a34063;
+    outline-offset: 4px;
+  }
+
+  .pip-credits-arrow {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .pip-credits-panel {
+    box-sizing: border-box;
+    max-width: 510px;
+    margin: 18px auto 0;
+    padding: 22px;
+    border: 1px solid rgba(163, 64, 99, 0.2);
+    border-radius: 22px;
+    background: #fff8f1;
+    text-align: left;
+    box-shadow: 0 8px 28px rgba(92, 64, 51, 0.06);
+    animation: pipCreditsAppear 0.25s ease;
+  }
+
+  .pip-credits-panel[hidden] {
+    display: none;
+  }
+
+  .pip-credit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(163, 64, 99, 0.12);
+  }
+
+  .pip-credit-item:last-of-type {
+    border-bottom: none;
+  }
+
+  .pip-credit-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(163, 64, 99, 0.09);
+    color: #a34063;
+    font-size: 17px;
+  }
+
+  .pip-credit-item h3 {
+    margin: 2px 0 5px;
+    color: #5c4033;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .pip-credit-item p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .pip-credits-note {
+    margin: 18px 0 0;
+    color: #a34063;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  .pip-credits-footer {
+    margin: 26px 0 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  @keyframes pipCreditsAppear {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pip-credits-toggle {
+      transition: none;
+    }
+
+    .pip-credits-panel {
+      animation: none;
+    }
+  }
+</style>
+
+
+</body></html>
